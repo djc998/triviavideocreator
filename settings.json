@@ -15,9 +15,14 @@
       "enabled": true,
       "color": "#000000",
       "offset": {
-        "x": 3,
-        "y": 3
+        "x": 5,
+        "y": 5
       }
+    },
+    "outline": {
+      "enabled": true,
+      "color": "#000000",
+      "thickness": 2
     },
     "alignment": "center",
     "max_width": 1000,
@@ -73,5 +78,5 @@
     "codec": "libx264",
     "preset": "ultrafast"
   },
-  "background_image": "background_disney.png"
+  "background_image": ""
 } 

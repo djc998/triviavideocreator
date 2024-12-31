@@ -29,6 +29,7 @@ def create_text_clip(text, duration, clip_type='question', settings=None):
     font = settings['text']['font']
     text_color = settings['text']['color']
     shadow_enabled = settings['text']['shadow']['enabled']
+    outline_enabled = settings['text'].get('outline', {}).get('enabled', False)
     
     # Create main text clip with transparent background
     main_clip = TextClip(wrapped_text, 
@@ -38,7 +39,9 @@ def create_text_clip(text, duration, clip_type='question', settings=None):
                         method='label',
                         align=settings['text']['alignment'],
                         size=(settings['text']['max_width'], None),
-                        bg_color='transparent')
+                        bg_color='transparent',
+                        stroke_color=settings['text'].get('outline', {}).get('color', '#000000') if outline_enabled else None,
+                        stroke_width=settings['text'].get('outline', {}).get('thickness', 2) if outline_enabled else 0)
     
     if shadow_enabled:
         # Create shadow clip
