@@ -3,6 +3,7 @@ from moviepy.config import change_settings
 import json
 import os
 import textwrap
+import numpy as np
 
 # Configure MoviePy to use ImageMagick
 # if os.name == 'nt':  # for Windows
@@ -68,47 +69,82 @@ def create_text_clip(text, duration, clip_type='question', settings=None):
     return combined_clip
 
 def create_timer_clip(duration, start_time, settings):
-    # Create main timer clip
-    timer_text = str(int(duration - start_time))
-    main_clip = TextClip(timer_text, 
-                        fontsize=settings['text']['size']['timer'], 
-                        color=settings['text']['color'], 
-                        font=settings['text']['font'],
-                        method='caption',
-                        size=(200, 100),
-                        align='center',
-                        bg_color='transparent')
-    
-    if settings['text']['shadow']['enabled']:
-        # Create shadow clip
-        shadow_clip = TextClip(timer_text,
-                             fontsize=settings['text']['size']['timer'],
-                             color=settings['text']['shadow']['color'],
-                             font=settings['text']['font'],
-                             method='caption',
-                             size=(200, 100),
-                             align='center',
-                             bg_color='transparent')
-        
-        # Position clips at top of screen with proper layering
-        shadow_clip = shadow_clip.set_position(('center', 20))
-        main_clip = main_clip.set_position(('center', 20 - settings['text']['shadow']['offset']['y']))
-        
-        # Combine clips with shadow behind and set z-index
-        combined_clip = CompositeVideoClip([shadow_clip, main_clip], size=(200, 100))
+    # Get timer settings
+    shape_type = settings['timer'].get('shape', 'circle')
+    if shape_type == 'circle':
+        shape_settings = settings['timer']['circle']
     else:
-        combined_clip = main_clip.set_position(('center', 20))
+        shape_settings = settings['timer']['square']
     
-    # Set final position for the combined timer
-    combined_clip = combined_clip.set_position(('center', 20))
+    size = shape_settings['size']
+    shape_color = shape_settings['color'].lstrip('#')
+    y_pos = shape_settings['position']['y']
+    text_color = settings['timer']['text']['color']
     
-    # Before applying crossfade, make sure to set the duration
-    combined_clip = combined_clip.set_duration(duration)
+    # Create shape background
+    shape_surface = np.zeros((size, size, 3))
     
-    # Now apply the crossfade
-    combined_clip = combined_clip.crossfadein(settings['transitions']['duration'])
+    if shape_type == 'circle':
+        # Create circular mask
+        center = size // 2
+        y, x = np.ogrid[:size, :size]
+        dist_from_center = np.sqrt((x - center)**2 + (y - center)**2)
+        shape_mask = dist_from_center <= center
+    else:
+        # Create square mask (full surface)
+        shape_mask = np.ones((size, size), dtype=bool)
     
-    return combined_clip.set_duration(1)
+    # Convert hex color to RGB and set shape color
+    rgb_color = tuple(int(shape_color[i:i+2], 16) for i in (0, 2, 4))
+    shape_surface[shape_mask] = rgb_color
+    
+    # Create shape clip
+    shape_clip = ImageClip(shape_surface).set_duration(1)
+    
+    # Create timer text
+    timer_text = str(int(duration - start_time))
+    text_clip = TextClip(
+        timer_text, 
+        fontsize=settings['text']['size']['timer'], 
+        color=text_color,
+        font=settings['text']['font'],
+        method='label',
+        align='center',
+        bg_color='transparent'
+    )
+    
+    # Center text on shape
+    text_clip = text_clip.set_position(('center', 'center'))
+    
+    # Combine shape and text
+    combined_clip = CompositeVideoClip(
+        [shape_clip, text_clip],
+        size=(size, size)
+    )
+    
+    # Position the combined timer in the video
+    combined_clip = combined_clip.set_position(('center', y_pos))
+    
+    # Add timer sound if enabled
+    if settings['timer'].get('sound', {}).get('enabled', False):
+        sound_file = settings['timer']['sound'].get('file')
+        if sound_file and os.path.exists(sound_file):
+            try:
+                tick_sound = AudioFileClip(sound_file)
+                if settings['timer']['sound'].get('volume'):
+                    tick_sound = tick_sound.volumex(settings['timer']['sound']['volume'])
+                combined_clip = combined_clip.set_audio(tick_sound)
+            except Exception as e:
+                print(f"Warning: Could not load timer sound: {str(e)}")
+    
+    # Set duration BEFORE applying crossfade
+    combined_clip = combined_clip.set_duration(1)
+    
+    # Add fade in for first number
+    if start_time == 0:
+        combined_clip = combined_clip.crossfadein(settings['transitions']['duration'])
+    
+    return combined_clip
 
 def create_qa_video(question, answer, settings, audio_clip=None):
     # Get video dimensions and durations

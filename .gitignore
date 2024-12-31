@@ -36,6 +36,6 @@ output.mp4
 *.mp4
 *.wav
 *.mp3
-
+*.png
 #Mac
 .DS_Store

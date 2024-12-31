@@ -23,9 +23,34 @@
     "max_width": 1000,
     "wrap_width": 30
   },
+  "timer": {
+    "shape": "square",
+    "circle": {
+      "size": 100,
+      "color": "#FFFFFF",
+      "position": {
+        "y": 50
+      }
+    },
+    "square": {
+      "size": 100,
+      "color": "#FFFFFF",
+      "position": {
+        "y": 50
+      }
+    },
+    "text": {
+      "color": "#000000"
+    },
+    "sound": {
+      "enabled": true,
+      "file": "tick.mp3",
+      "volume": 3.0
+    }
+  },
   "preview_mode": {
     "enabled": true,
-    "questions_limit": 2
+    "questions_limit": 1
   },
   "audio": {
     "file": "Upbeat Inspiration.mp3",
@@ -39,7 +64,7 @@
   },
   "timing": {
     "question_duration": 10,
-    "answer_duration": 5
+    "answer_duration": 1
   },
   "video": {
     "width": 1280,
