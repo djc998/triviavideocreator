@@ -58,7 +58,7 @@
     "questions_limit": 1
   },
   "audio": {
-    "file": "Upbeat Inspiration.mp3",
+    "file": "music/Upbeat Inspiration.mp3",
     "volume": 1.0,
     "loop": true
   },
@@ -78,5 +78,5 @@
     "codec": "libx264",
     "preset": "ultrafast"
   },
-  "background_image": ""
+  "background_image": "backgrounds/background.png"
 } 
