@@ -1,0 +1,46 @@
+{
+  "background": {
+    "color": "#060CE9",
+    "opacity": 1.0
+  },
+  "text": {
+    "font": "Arial",
+    "size": {
+      "question": 70,
+      "answer": 70,
+      "timer": 80
+    },
+    "color": "#FFFFFF",
+    "shadow": {
+      "enabled": true,
+      "color": "#000000",
+      "offset": {
+        "x": 3,
+        "y": 3
+      }
+    },
+    "alignment": "center",
+    "max_width": 1000,
+    "wrap_width": 30
+  },
+  "audio": {
+    "file": "music.wav",
+    "volume": 1.0,
+    "loop": true
+  },
+  "transitions": {
+    "type": "fade",
+    "duration": 0.5
+  },
+  "timing": {
+    "question_duration": 15,
+    "answer_duration": 12
+  },
+  "video": {
+    "width": 1280,
+    "height": 720,
+    "fps": 24,
+    "codec": "libx264",
+    "preset": "ultrafast"
+  }
+} 
