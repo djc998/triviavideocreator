@@ -23,18 +23,23 @@
     "max_width": 1000,
     "wrap_width": 30
   },
+  "preview_mode": {
+    "enabled": true,
+    "questions_limit": 2
+  },
   "audio": {
-    "file": "music.wav",
+    "file": "Upbeat Inspiration.mp3",
     "volume": 1.0,
     "loop": true
   },
   "transitions": {
     "type": "fade",
-    "duration": 0.5
+    "duration": 0.5,
+    "crossfade_duration": 0.3
   },
   "timing": {
-    "question_duration": 15,
-    "answer_duration": 12
+    "question_duration": 10,
+    "answer_duration": 5
   },
   "video": {
     "width": 1280,
@@ -42,5 +47,6 @@
     "fps": 24,
     "codec": "libx264",
     "preset": "ultrafast"
-  }
+  },
+  "background_image": "background_disney.png"
 } 

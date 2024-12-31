@@ -1,4 +1,4 @@
-from moviepy.editor import TextClip, CompositeVideoClip, ColorClip, concatenate_videoclips, AudioFileClip, concatenate_audioclips
+from moviepy.editor import TextClip, CompositeVideoClip, ColorClip, concatenate_videoclips, AudioFileClip, concatenate_audioclips, ImageClip
 from moviepy.config import change_settings
 import json
 import os
@@ -102,6 +102,12 @@ def create_timer_clip(duration, start_time, settings):
     # Set final position for the combined timer
     combined_clip = combined_clip.set_position(('center', 20))
     
+    # Before applying crossfade, make sure to set the duration
+    combined_clip = combined_clip.set_duration(duration)
+    
+    # Now apply the crossfade
+    combined_clip = combined_clip.crossfadein(settings['transitions']['duration'])
+    
     return combined_clip.set_duration(1)
 
 def create_qa_video(question, answer, settings, audio_clip=None):
@@ -113,14 +119,19 @@ def create_qa_video(question, answer, settings, audio_clip=None):
     total_duration = q_duration + a_duration
     
     try:
-        # Create background with hex color
-        hex_color = settings['background']['color']
-        rgb_color = tuple(int(hex_color.lstrip('#')[i:i+2], 16) for i in (0, 2, 4))
-        
-        background = ColorClip(
-            size=(w, h), 
-            color=rgb_color
-        ).set_duration(total_duration)
+        # Create background based on settings
+        if 'background_image' in settings and os.path.exists(settings['background_image']):
+            # Use background image if specified and exists
+            background = ImageClip(settings['background_image'])
+            # Resize to match video dimensions if needed
+            if background.size != (w, h):
+                background = background.resize((w, h))
+            background = background.set_duration(total_duration)
+        else:
+            # Fall back to color background if no image or image not found
+            hex_color = settings['background']['color']
+            rgb_color = tuple(int(hex_color.lstrip('#')[i:i+2], 16) for i in (0, 2, 4))
+            background = ColorClip(size=(w, h), color=rgb_color).set_duration(total_duration)
         
         # Create question and answer clips
         question_clip = create_text_clip(question, q_duration, 'question', settings)
@@ -162,9 +173,16 @@ def main():
         with open('questions.json', 'r') as file:
             data = json.load(file)
         
+        # If preview mode is enabled, limit the number of questions
+        questions = data['questions']
+        if settings.get('preview_mode', {}).get('enabled', False):
+            limit = settings['preview_mode'].get('questions_limit', 2)
+            questions = questions[:limit]
+            print(f"Preview mode enabled: Processing first {limit} questions only")
+        
         # Create video clips first to calculate total duration
         clips = []
-        for qa in data['questions']:
+        for qa in questions:
             clip = create_qa_video(
                 question=clean_text(qa['question']),
                 answer=clean_text(qa['answer']),
