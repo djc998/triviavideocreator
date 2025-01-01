@@ -71,6 +71,18 @@ def create_text_clip(text, duration, clip_type='question', settings=None):
     
     return combined_clip
 
+def get_x_position(x_setting, padding, clip_width, video_width):
+    """Calculate x position based on setting"""
+    if isinstance(x_setting, (int, float)):
+        return x_setting
+    if x_setting == "center":
+        return "center"  # Return just "center", not a tuple
+    if x_setting == "left":
+        return padding
+    if x_setting == "right":
+        return video_width - clip_width - padding
+    return "center"  # default to center
+
 def create_timer_clip(duration, start_time, settings):
     # Get timer settings
     shape_type = settings['timer'].get('shape', 'circle')
@@ -81,8 +93,11 @@ def create_timer_clip(duration, start_time, settings):
     
     size = shape_settings['size']
     shape_color = shape_settings['color'].lstrip('#')
-    y_pos = shape_settings['position']['y']
+    position = shape_settings['position']
     text_color = settings['timer']['text']['color']
+    
+    # Get video dimensions for positioning
+    video_width = settings['video']['width']
     
     # Create shape background
     shape_surface = np.zeros((size, size, 3))
@@ -125,8 +140,19 @@ def create_timer_clip(duration, start_time, settings):
         size=(size, size)
     )
     
+    # Calculate x position
+    x_pos = get_x_position(
+        position.get('x', 'center'),
+        position.get('padding', 20),
+        size,
+        video_width
+    )
+    
     # Position the combined timer in the video
-    combined_clip = combined_clip.set_position(('center', y_pos))
+    if x_pos == "center":
+        combined_clip = combined_clip.set_position(('center', position['y']))
+    else:
+        combined_clip = combined_clip.set_position((x_pos, position['y']))
     
     # Add timer sound if enabled
     if settings['timer'].get('sound', {}).get('enabled', False):

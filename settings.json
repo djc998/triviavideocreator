@@ -29,19 +29,23 @@
     "wrap_width": 30
   },
   "timer": {
-    "shape": "square",
+    "shape": "circle",
     "circle": {
       "size": 100,
       "color": "#FFFFFF",
       "position": {
-        "y": 50
+        "x": "center",
+        "y": 20, 
+        "padding": 20 
       }
     },
     "square": {
       "size": 100,
       "color": "#FFFFFF",
       "position": {
-        "y": 50
+        "x": "center", 
+        "y": 20, 
+        "padding": 20 
       }
     },
     "text": {
