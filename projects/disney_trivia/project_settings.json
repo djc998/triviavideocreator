@@ -5,10 +5,10 @@
     "opacity": 1.0
   },
   "text": {
-    "font": "Arial",
+    "font": "Broadway",
     "size": {
-      "question": 90,
-      "answer": 70,
+      "question": 70,
+      "answer": 90,
       "timer": 80
     },
     "color": "#FFFFFF",
@@ -39,7 +39,7 @@
         "y": "center",
         "padding": 50
       },
-      "width": 600
+      "width": 800
     },
     "alignment": "center",
     "wrap_width": 30
@@ -68,7 +68,7 @@
       "color": "#000000"
     },
     "sound": {
-      "enabled": true,
+      "enabled": false,
       "file": "/sounds/tick.mp3",
       "volume": 3.0
     }
@@ -89,7 +89,7 @@
   },
   "timing": {
     "question_duration": 10,
-    "answer_duration": 1
+    "answer_duration": 3
   },
   "video": {
     "width": 1280,

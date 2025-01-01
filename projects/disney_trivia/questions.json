@@ -1,140 +1,160 @@
 {
-    "questions": [
-      {
-        "question": "What is the name of the city that Carl and Ellie dream of visiting in Up?",
-        "answer": "Paradise Falls"
-      },
-      {
-        "question": "In The Lion King, what is the name of the gorge where Mufasa dies?",
-        "answer": "The Gorge"
-      },
-      {
-        "question": "What type of animal is Flower in Bambi?",
-        "answer": "A skunk"
-      },
-      {
-        "question": "What does the crocodile tick-tock in Peter Pan?",
-        "answer": "A clock"
-      },
-      {
-        "question": "What is the name of the toy store owner in Toy Story 2?",
-        "answer": "Al McWhiggin"
-      },
-      {
-        "question": "What is the name of the little mermaid who is Ariel's best friend?",
-        "answer": "Flounder"
-      },
-      {
-        "question": "What does Cinderella's fairy godmother turn into a carriage?",
-        "answer": "A pumpkin"
-      },
-      {
-        "question": "What is the name of the villain in 101 Dalmatians?",
-        "answer": "Cruella de Vil"
-      },
-      {
-        "question": "What does Pinocchio's nose do when he lies?",
-        "answer": "It grows longer"
-      },
-      {
-        "question": "What is the name of the magic carpet in Aladdin?",
-        "answer": "Magic Carpet (it has no other name)"
-      },
-      {
-        "question": "What kind of creature is Mushu in Mulan?",
-        "answer": "A dragon"
-      },
-      {
-        "question": "What is the name of the tribe that Pocahontas belongs to?",
-        "answer": "Powhatan"
-      },
-      {
-        "question": "What is the name of the island where Lilo and Stitch live?",
-        "answer": "Kauai"
-      },
-      {
-        "question": "What is the name of the restaurant Remy opens in Ratatouille?",
-        "answer": "La Ratatouille"
-      },
-      {
-        "question": "What is the name of the snowman that Anna and Elsa build in Frozen?",
-        "answer": "Olaf"
-      },
-      {
-        "question": "What is the name of the city where Princess and the Frog takes place?",
-        "answer": "New Orleans"
-      },
-      {
-        "question": "What is the name of the group of villains that Maleficent leads in Sleeping Beauty?",
-        "answer": "The Council of Villains"
-      },
-      {
-        "question": "What is the name of the planet where Wall-E finds the plant?",
-        "answer": "Earth"
-      },
-      {
-        "question": "What is the name of the organization that Syndrome leads in The Incredibles?",
-        "answer": "The Evil Endeavor"
-      },
-      {
-        "question": "What is the name of the dog in Up?",
-        "answer": "Dug"
-      },
-      {
-        "question": "What is the name of the villain in The Princess and the Frog?",
-        "answer": "Dr. Facilier"
-      },
-      {
-        "question": "What is the name of the bear that Baloo fights in The Jungle Book?",
-        "answer": "King Louie"
-      },
-      {
-        "question": "What is the name of the sea witch in The Little Mermaid?",
-        "answer": "Ursula"
-      },
-      {
-        "question": "What is the name of the town where Beauty and the Beast takes place?",
-        "answer": "Villeneuve"
-      },
-      {
-        "question": "What is the name of the horse in Mulan?",
-        "answer": "Khan"
-      },
-      {
-        "question": "What is the name of the toy horse in Toy Story?",
-        "answer": "Bullseye"
-      },
-      {
-        "question": "What is the name of the villain in Hercules?",
-        "answer": "Hades"
-      },
-      {
-        "question": "What is the name of the cricket in Pinocchio?",
-        "answer": "Jiminy Cricket"
-      },
-      {
-        "question": "What is the name of the island where Moana lives?",
-        "answer": "Motunui"
-      },
-      {
-        "question": "What is the name of the crab in Moana?",
-        "answer": "Tamatoa"
-      },
-      {
-        "question": "What is the name of the villain in Tangled?",
-        "answer": "Mother Gothel"
-      },
-      {
-        "question": "What is the name of the chameleon in Tangled?",
-        "answer": "Pascal"
-      },
-      {
-        "question": "What is the name of the group of fairies in Sleeping Beauty?",
-        "answer": "Flora, Fauna, and Merryweather"
-      },
-      {
-        "question": "What is the name of the magic flower in Tangled?",
-        "answer": "The Sundrop Flower"
-      }
-    ]
-  }
+  "questions": [
+    {
+      "question": "Who won Album of the Year at the 2024 Grammy Awards?",
+      "answer": "Taylor Swift for 'Midnights'"
+    },
+    {
+      "question": "Which movie won Best Picture at the 2024 Oscars?",
+      "answer": "Oppenheimer"
+    },
+    {
+      "question": "Which NBA team won the 2024 NBA Championship?",
+      "answer": "Denver Nuggets"
+    },
+    {
+      "question": "Which artist broke streaming records with their single 'Ethereal Dreams' in 2024?",
+      "answer": "Olivia Rodrigo"
+    },
+    {
+      "question": "Who hosted the 2024 Met Gala with the theme 'Future Nostalgia'?",
+      "answer": "Rihanna and Timothée Chalamet"
+    },
+    {
+      "question": "Which Marvel movie became the highest-grossing film of 2024?",
+      "answer": "Avengers: Legacy"
+    },
+    {
+      "question": "Which singer headlined the 2024 Super Bowl Halftime Show?",
+      "answer": "Beyoncé"
+    },
+    {
+      "question": "Who won the 2024 Wimbledon men's singles title?",
+      "answer": "Carlos Alcaraz"
+    },
+    {
+      "question": "Which pop star released a surprise album titled 'Eclipse' in 2024?",
+      "answer": "Ariana Grande"
+    },
+    {
+      "question": "What was the most-watched Netflix series of 2024?",
+      "answer": "The Crown Season 7"
+    },
+    {
+      "question": "Which celebrity couple announced their engagement during the 2024 Cannes Film Festival?",
+      "answer": "Zendaya and Tom Holland"
+    },
+    {
+      "question": "Which TikTok dance challenge went viral in 2024?",
+      "answer": "'Glow Up Shuffle'"
+    },
+    {
+      "question": "Which athlete won the most gold medals at the 2024 Summer Olympics?",
+      "answer": "Katie Ledecky"
+    },
+    {
+      "question": "Which TV show had its series finale in 2024 after a 10-season run?",
+      "answer": "Stranger Things"
+    },
+    {
+      "question": "Which band reunited for a world tour in 2024, selling out arenas worldwide?",
+      "answer": "Oasis"
+    },
+    {
+      "question": "Which actor won the Best Actor award at the 2024 Oscars?",
+      "answer": "Cillian Murphy for 'Oppenheimer'"
+    },
+    {
+      "question": "Who won the FIFA Ballon d'Or in 2024?",
+      "answer": "Lionel Messi"
+    },
+    {
+      "question": "Which viral AI-generated song became a global hit in 2024?",
+      "answer": "'Echoes of Tomorrow'"
+    },
+    {
+      "question": "Which actress starred in the 2024 reboot of 'Lara Croft: Tomb Raider'?",
+      "answer": "Anya Taylor-Joy"
+    },
+    {
+      "question": "What was the top-grossing video game of 2024?",
+      "answer": "The Elder Scrolls VI"
+    },
+    {
+      "question": "Which YouTube creator reached 200 million subscribers in 2024?",
+      "answer": "MrBeast"
+    },
+    {
+      "question": "Who won the 2024 Formula 1 World Championship?",
+      "answer": "Max Verstappen"
+    },
+    {
+      "question": "Which Hollywood couple announced their split in 2024 after 20 years together?",
+      "answer": "Will Smith and Jada Pinkett Smith"
+    },
+    {
+      "question": "Which reality TV show introduced a groundbreaking live voting feature in 2024?",
+      "answer": "Big Brother"
+    },
+    {
+      "question": "Which singer won the MTV Video Music Award for Best New Artist in 2024?",
+      "answer": "Ice Spice"
+    },
+    {
+      "question": "What was the theme of the 2024 Met Gala?",
+      "answer": "Future Nostalgia"
+    },
+    {
+      "question": "Which football team won the 2024 UEFA Champions League?",
+      "answer": "Real Madrid"
+    },
+    {
+      "question": "Which actor was named People Magazine's Sexiest Man Alive in 2024?",
+      "answer": "Chris Hemsworth"
+    },
+    {
+      "question": "Which artist performed a record-breaking residency in Las Vegas in 2024?",
+      "answer": "Adele"
+    },
+    {
+      "question": "What major tech event introduced the iPhone 16 in 2024?",
+      "answer": "Apple's WWDC"
+    },
+    {
+      "question": "Which movie sequel released in 2024 surpassed $2 billion at the box office?",
+      "answer": "Avatar 3"
+    },
+    {
+      "question": "Who won the Women's World Cup in 2024?",
+      "answer": "Spain"
+    },
+    {
+      "question": "Which celebrity launched a groundbreaking eco-friendly clothing line in 2024?",
+      "answer": "Emma Watson"
+    },
+    {
+      "question": "What was the name of the viral 2024 documentary about social media influencers?",
+      "answer": "'Behind the Filters'"
+    },
+    {
+      "question": "Which comedian had a record-breaking Netflix stand-up special in 2024?",
+      "answer": "Kevin Hart"
+    },
+    {
+      "question": "Which streaming platform launched a live sports channel in 2024?",
+      "answer": "HBO Max"
+    },
+    {
+      "question": "Which musical won Best Musical at the 2024 Tony Awards?",
+      "answer": "'The Time Traveler's Song'"
+    },
+    {
+      "question": "Which celebrity's memoir, 'Unfiltered,' became a bestseller in 2024?",
+      "answer": "Jennifer Lawrence"
+    },
+    {
+      "question": "Which global K-pop group announced its indefinite hiatus in 2024?",
+      "answer": "BTS"
+    }
+  ]
+}
