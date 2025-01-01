@@ -1,160 +1,162 @@
 {
+  "title": "Ultimate Disney Trivia Quiz",
+  "description": "Test your knowledge of all things Disney with this ultimate trivia quiz! From classic animated films to theme park secrets, see how much of a Disney fan you really are!",
   "questions": [
     {
-      "question": "Who won Album of the Year at the 2024 Grammy Awards?",
-      "answer": "Taylor Swift for 'Midnights'"
+      "question": "What was the first feature-length animated movie ever released by Disney?",
+      "answer": "Snow White and the Seven Dwarfs"
     },
     {
-      "question": "Which movie won Best Picture at the 2024 Oscars?",
-      "answer": "Oppenheimer"
+      "question": "In 'The Lion King,' what is the name of Simba's father?",
+      "answer": "Mufasa"
     },
     {
-      "question": "Which NBA team won the 2024 NBA Championship?",
-      "answer": "Denver Nuggets"
+      "question": "What is the name of the toy cowboy in 'Toy Story'?",
+      "answer": "Woody"
     },
     {
-      "question": "Which artist broke streaming records with their single 'Ethereal Dreams' in 2024?",
-      "answer": "Olivia Rodrigo"
+      "question": "Which Disney princess has a raccoon as a sidekick?",
+      "answer": "Pocahontas"
     },
     {
-      "question": "Who hosted the 2024 Met Gala with the theme 'Future Nostalgia'?",
-      "answer": "Rihanna and Timothée Chalamet"
+      "question": "What kind of animal is Dumbo?",
+      "answer": "An elephant"
     },
     {
-      "question": "Which Marvel movie became the highest-grossing film of 2024?",
-      "answer": "Avengers: Legacy"
+      "question": "What is the name of the sorcerer in 'Fantasia'?",
+      "answer": "Yen Sid"
     },
     {
-      "question": "Which singer headlined the 2024 Super Bowl Halftime Show?",
-      "answer": "Beyoncé"
+      "question": "Which Disney movie features the song 'Under the Sea'?",
+      "answer": "The Little Mermaid"
     },
     {
-      "question": "Who won the 2024 Wimbledon men's singles title?",
-      "answer": "Carlos Alcaraz"
+      "question": "What is the name of the bear in 'The Jungle Book'?",
+      "answer": "Baloo"
     },
     {
-      "question": "Which pop star released a surprise album titled 'Eclipse' in 2024?",
-      "answer": "Ariana Grande"
+      "question": "What is the name of the castle at Disneyland in California?",
+      "answer": "Sleeping Beauty Castle"
     },
     {
-      "question": "What was the most-watched Netflix series of 2024?",
-      "answer": "The Crown Season 7"
+      "question": "Who is the villain in '101 Dalmatians'?",
+      "answer": "Cruella de Vil"
     },
     {
-      "question": "Which celebrity couple announced their engagement during the 2024 Cannes Film Festival?",
-      "answer": "Zendaya and Tom Holland"
+      "question": "What year did Disneyland first open?",
+      "answer": "1955"
     },
     {
-      "question": "Which TikTok dance challenge went viral in 2024?",
-      "answer": "'Glow Up Shuffle'"
+      "question": "In 'Beauty and the Beast,' what is the name of Gaston's sidekick?",
+      "answer": "LeFou"
     },
     {
-      "question": "Which athlete won the most gold medals at the 2024 Summer Olympics?",
-      "answer": "Katie Ledecky"
+      "question": "What is the name of the mountain in Disney's 'Frozen'?",
+      "answer": "North Mountain"
     },
     {
-      "question": "Which TV show had its series finale in 2024 after a 10-season run?",
-      "answer": "Stranger Things"
+      "question": "What is the name of the teapot in 'Beauty and the Beast'?",
+      "answer": "Mrs. Potts"
     },
     {
-      "question": "Which band reunited for a world tour in 2024, selling out arenas worldwide?",
-      "answer": "Oasis"
+      "question": "In 'Aladdin,' what is the name of the princess?",
+      "answer": "Jasmine"
     },
     {
-      "question": "Which actor won the Best Actor award at the 2024 Oscars?",
-      "answer": "Cillian Murphy for 'Oppenheimer'"
+      "question": "What is the name of Mickey Mouse’s pet dog?",
+      "answer": "Pluto"
     },
     {
-      "question": "Who won the FIFA Ballon d'Or in 2024?",
-      "answer": "Lionel Messi"
+      "question": "Which Disney movie features a flying elephant?",
+      "answer": "Dumbo"
     },
     {
-      "question": "Which viral AI-generated song became a global hit in 2024?",
-      "answer": "'Echoes of Tomorrow'"
+      "question": "What are the names of Cinderella’s stepsisters?",
+      "answer": "Anastasia and Drizella"
     },
     {
-      "question": "Which actress starred in the 2024 reboot of 'Lara Croft: Tomb Raider'?",
-      "answer": "Anya Taylor-Joy"
+      "question": "What is the name of the Disney movie featuring the characters Joy, Sadness, and Anger?",
+      "answer": "Inside Out"
     },
     {
-      "question": "What was the top-grossing video game of 2024?",
-      "answer": "The Elder Scrolls VI"
+      "question": "Which Disney film features the song 'Circle of Life'?",
+      "answer": "The Lion King"
     },
     {
-      "question": "Which YouTube creator reached 200 million subscribers in 2024?",
-      "answer": "MrBeast"
+      "question": "What is the name of the princess in 'Sleeping Beauty'?",
+      "answer": "Aurora"
     },
     {
-      "question": "Who won the 2024 Formula 1 World Championship?",
-      "answer": "Max Verstappen"
+      "question": "What is the name of the snowman in 'Frozen'?",
+      "answer": "Olaf"
     },
     {
-      "question": "Which Hollywood couple announced their split in 2024 after 20 years together?",
-      "answer": "Will Smith and Jada Pinkett Smith"
+      "question": "Which Disney film features a family of superheroes?",
+      "answer": "The Incredibles"
     },
     {
-      "question": "Which reality TV show introduced a groundbreaking live voting feature in 2024?",
-      "answer": "Big Brother"
+      "question": "What is the name of the dragon in 'Mulan'?",
+      "answer": "Mushu"
     },
     {
-      "question": "Which singer won the MTV Video Music Award for Best New Artist in 2024?",
-      "answer": "Ice Spice"
+      "question": "What is the name of the city where 'Big Hero 6' takes place?",
+      "answer": "San Fransokyo"
     },
     {
-      "question": "What was the theme of the 2024 Met Gala?",
-      "answer": "Future Nostalgia"
+      "question": "What is the name of Simba’s evil uncle in 'The Lion King'?",
+      "answer": "Scar"
     },
     {
-      "question": "Which football team won the 2024 UEFA Champions League?",
-      "answer": "Real Madrid"
+      "question": "What is the name of the bear in Disney’s 'Brother Bear'?",
+      "answer": "Koda"
     },
     {
-      "question": "Which actor was named People Magazine's Sexiest Man Alive in 2024?",
-      "answer": "Chris Hemsworth"
+      "question": "Which Disney film features a character named Lightning McQueen?",
+      "answer": "Cars"
     },
     {
-      "question": "Which artist performed a record-breaking residency in Las Vegas in 2024?",
-      "answer": "Adele"
+      "question": "What is the name of the sea witch in 'The Little Mermaid'?",
+      "answer": "Ursula"
     },
     {
-      "question": "What major tech event introduced the iPhone 16 in 2024?",
-      "answer": "Apple's WWDC"
+      "question": "What is the name of Goofy’s son?",
+      "answer": "Max"
     },
     {
-      "question": "Which movie sequel released in 2024 surpassed $2 billion at the box office?",
-      "answer": "Avatar 3"
+      "question": "Which Disney princess has the ability to heal people with her hair?",
+      "answer": "Rapunzel"
     },
     {
-      "question": "Who won the Women's World Cup in 2024?",
-      "answer": "Spain"
+      "question": "In 'Finding Nemo,' what type of fish is Nemo?",
+      "answer": "A clownfish"
     },
     {
-      "question": "Which celebrity launched a groundbreaking eco-friendly clothing line in 2024?",
-      "answer": "Emma Watson"
+      "question": "What is the name of the castle in 'Frozen'?",
+      "answer": "Arendelle Castle"
     },
     {
-      "question": "What was the name of the viral 2024 documentary about social media influencers?",
-      "answer": "'Behind the Filters'"
+      "question": "What is the name of the rabbit in 'Zootopia'?",
+      "answer": "Judy Hopps"
     },
     {
-      "question": "Which comedian had a record-breaking Netflix stand-up special in 2024?",
-      "answer": "Kevin Hart"
+      "question": "Which Disney film features a dog named Bolt?",
+      "answer": "Bolt"
     },
     {
-      "question": "Which streaming platform launched a live sports channel in 2024?",
-      "answer": "HBO Max"
+      "question": "In 'Tangled,' what is the name of Rapunzel’s chameleon?",
+      "answer": "Pascal"
     },
     {
-      "question": "Which musical won Best Musical at the 2024 Tony Awards?",
-      "answer": "'The Time Traveler's Song'"
+      "question": "What is the name of the talking teacup in 'Beauty and the Beast'?",
+      "answer": "Chip"
     },
     {
-      "question": "Which celebrity's memoir, 'Unfiltered,' became a bestseller in 2024?",
-      "answer": "Jennifer Lawrence"
+      "question": "Which Disney film features the character Maui?",
+      "answer": "Moana"
     },
     {
-      "question": "Which global K-pop group announced its indefinite hiatus in 2024?",
-      "answer": "BTS"
+      "question": "What is the name of the Disney movie featuring a robot named Wall-E?",
+      "answer": "Wall-E"
     }
   ]
 }
