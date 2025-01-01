@@ -7,7 +7,7 @@
   "text": {
     "font": "Arial",
     "size": {
-      "question": 70,
+      "question": 90,
       "answer": 70,
       "timer": 80
     },
@@ -25,8 +25,23 @@
       "color": "#000000",
       "thickness": 2
     },
+    "question": {
+      "position": {
+        "x": 350,
+        "y": "center",
+        "padding": 20
+      },
+      "width": 800
+    },
+    "answer": {
+      "position": {
+        "x": 350,
+        "y": "center",
+        "padding": 50
+      },
+      "width": 600
+    },
     "alignment": "center",
-    "max_width": 1000,
     "wrap_width": 30
   },
   "timer": {

@@ -64,6 +64,39 @@ def wrap_text(text, width):
     """Wrap text to specified width"""
     return '\n'.join(textwrap.wrap(text, width=width))
 
+def get_text_position(settings, clip_type, clip_width, clip_height, video_width, video_height):
+    """Calculate text position based on settings"""
+    position = settings['text'][clip_type]['position']
+    x_setting = position.get('x', 'center')
+    y_setting = position.get('y', 'center')
+    padding = position.get('padding', 20)
+    
+    # Calculate x position
+    if isinstance(x_setting, (int, float)) or str(x_setting).isdigit():
+        x_pos = int(x_setting)  # Convert to int if it's a string number
+    elif x_setting == "center":
+        x_pos = 'center'
+    elif x_setting == "left":
+        x_pos = padding
+    elif x_setting == "right":
+        x_pos = video_width - clip_width - padding
+    else:
+        x_pos = 'center'
+    
+    # Calculate y position
+    if isinstance(y_setting, (int, float)) or str(y_setting).isdigit():
+        y_pos = int(y_setting)  # Convert to int if it's a string number
+    elif y_setting == "center":
+        y_pos = 'center'
+    elif y_setting == "top":
+        y_pos = padding
+    elif y_setting == "bottom":
+        y_pos = video_height - clip_height - padding
+    else:
+        y_pos = 'center'
+    
+    return (x_pos, y_pos)
+
 def create_text_clip(text, duration, clip_type='question', settings=None):
     wrapped_text = wrap_text(text, settings['text']['wrap_width'])
     
@@ -73,6 +106,7 @@ def create_text_clip(text, duration, clip_type='question', settings=None):
     text_color = settings['text']['color']
     shadow_enabled = settings['text']['shadow']['enabled']
     outline_enabled = settings['text'].get('outline', {}).get('enabled', False)
+    max_width = settings['text'][clip_type]['width']
     
     # Create main text clip with transparent background
     main_clip = TextClip(wrapped_text, 
@@ -81,7 +115,7 @@ def create_text_clip(text, duration, clip_type='question', settings=None):
                         font=font, 
                         method='label',
                         align=settings['text']['alignment'],
-                        size=(settings['text']['max_width'], None),
+                        size=(max_width, None),
                         bg_color='transparent',
                         stroke_color=settings['text'].get('outline', {}).get('color', '#000000') if outline_enabled else None,
                         stroke_width=settings['text'].get('outline', {}).get('thickness', 2) if outline_enabled else 0)
@@ -94,7 +128,7 @@ def create_text_clip(text, duration, clip_type='question', settings=None):
                              font=font,
                              method='label',
                              align=settings['text']['alignment'],
-                             size=(settings['text']['max_width'], None),
+                             size=(max_width, None),
                              bg_color='transparent')
         
         # Offset shadow
@@ -107,24 +141,25 @@ def create_text_clip(text, duration, clip_type='question', settings=None):
     else:
         combined_clip = main_clip
     
+    # Get the actual height of the clip
+    clip_height = combined_clip.size[1]
+    
+    # Calculate position
+    position = get_text_position(
+        settings, 
+        clip_type, 
+        max_width, 
+        clip_height,  # Pass the actual clip height
+        settings['video']['width'], 
+        settings['video']['height']
+    )
+    
     # Set position, duration and fade
-    combined_clip = combined_clip.set_position('center')
+    combined_clip = combined_clip.set_position(position)
     combined_clip = combined_clip.set_duration(duration)
     combined_clip = combined_clip.crossfadein(settings['transitions']['duration'])
     
     return combined_clip
-
-def get_x_position(x_setting, padding, clip_width, video_width):
-    """Calculate x position based on setting"""
-    if isinstance(x_setting, (int, float)):
-        return x_setting
-    if x_setting == "center":
-        return "center"  # Return just "center", not a tuple
-    if x_setting == "left":
-        return padding
-    if x_setting == "right":
-        return video_width - clip_width - padding
-    return "center"  # default to center
 
 def create_timer_clip(duration, start_time, settings):
     # Get timer settings
@@ -143,7 +178,7 @@ def create_timer_clip(duration, start_time, settings):
     video_width = settings['video']['width']
     
     # Create shape background with alpha channel (RGBA)
-    shape_surface = np.zeros((size, size, 4))  # Changed from 3 to 4 channels
+    shape_surface = np.zeros((size, size, 4))
     
     if shape_type == 'circle':
         # Create circular mask
@@ -153,16 +188,16 @@ def create_timer_clip(duration, start_time, settings):
         shape_mask = dist_from_center <= center
         
         # Set alpha to 0 (transparent) everywhere except the circle
-        shape_surface[..., 3] = 0  # Set alpha channel to transparent
-        shape_surface[shape_mask, 3] = 255  # Set alpha to opaque only for the circle
+        shape_surface[..., 3] = 0
+        shape_surface[shape_mask, 3] = 255
     else:
         # Create square mask (full surface)
         shape_mask = np.ones((size, size), dtype=bool)
-        shape_surface[..., 3] = 255  # Set alpha to opaque for square
+        shape_surface[..., 3] = 255
     
     # Convert hex color to RGB and set shape color
     rgb_color = tuple(int(shape_color[i:i+2], 16) for i in (0, 2, 4))
-    shape_surface[shape_mask, 0:3] = rgb_color  # Set RGB values where mask is True
+    shape_surface[shape_mask, 0:3] = rgb_color
     
     # Create shape clip with transparency
     shape_clip = ImageClip(shape_surface, ismask=False, transparent=True).set_duration(1)
@@ -188,19 +223,24 @@ def create_timer_clip(duration, start_time, settings):
         size=(size, size)
     )
     
-    # Calculate x position
-    x_pos = get_x_position(
-        position.get('x', 'center'),
-        position.get('padding', 20),
-        size,
-        video_width
-    )
+    # Calculate position
+    x_setting = position.get('x', 'center')
+    if x_setting == "center":
+        pos = ('center', position['y'])
+    else:
+        padding = position.get('padding', 20)
+        if isinstance(x_setting, (int, float)):
+            x_pos = x_setting
+        elif x_setting == "left":
+            x_pos = padding
+        elif x_setting == "right":
+            x_pos = video_width - size - padding
+        else:
+            x_pos = "center"
+        pos = (x_pos, position['y'])
     
     # Position the combined timer in the video
-    if x_pos == "center":
-        combined_clip = combined_clip.set_position(('center', position['y']))
-    else:
-        combined_clip = combined_clip.set_position((x_pos, position['y']))
+    combined_clip = combined_clip.set_position(pos)
     
     # Add timer sound if enabled
     if settings['timer'].get('sound', {}).get('enabled', False):
