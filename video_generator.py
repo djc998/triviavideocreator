@@ -13,9 +13,52 @@ import numpy as np
 change_settings({"IMAGEMAGICK_BINARY": r"/opt/homebrew/bin/convert"})
 
 def load_settings():
-    """Load settings from settings.json"""
+    """Load settings and project settings"""
+    # Get the root directory of the application
+    root_dir = os.path.dirname(os.path.abspath(__file__))
+    print(f"Root directory: {root_dir}")
+    
+    # Load main settings file
     with open('settings.json', 'r') as file:
-        return json.load(file)
+        main_settings = json.load(file)
+    
+    # Get project path
+    project_settings_path = main_settings['project']
+    project_dir = os.path.dirname(project_settings_path)
+    print(f"Project directory: {project_dir}")
+    
+    # Load project settings
+    with open(project_settings_path, 'r') as file:
+        project_settings = json.load(file)
+    
+    # Load questions
+    questions_path = os.path.join(project_dir, project_settings['questions_file'])
+    print(f"Questions path: {questions_path}")
+    
+    with open(questions_path, 'r') as file:
+        questions_data = json.load(file)
+    
+    # Debug print settings before path updates
+    print(f"Background image before: {project_settings.get('background_image', 'Not set')}")
+    
+    # Update paths to be relative to root directory for media files
+    if 'background_image' in project_settings:
+        if project_settings['background_image']:  # Only update if not empty
+            project_settings['background_image'] = os.path.join(root_dir, project_settings['background_image'].lstrip('/'))
+            print(f"Background image after: {project_settings['background_image']}")
+        else:
+            project_settings['background_image'] = ''  # Ensure it's an empty string
+            print("Background image is empty, using color background")
+    
+    if 'audio' in project_settings and 'file' in project_settings['audio']:
+        project_settings['audio']['file'] = os.path.join(root_dir, project_settings['audio']['file'].lstrip('/'))
+        print(f"Audio file path: {project_settings['audio']['file']}")
+    
+    if 'timer' in project_settings and 'sound' in project_settings['timer']:
+        project_settings['timer']['sound']['file'] = os.path.join(root_dir, project_settings['timer']['sound']['file'].lstrip('/'))
+        print(f"Timer sound path: {project_settings['timer']['sound']['file']}")
+    
+    return project_settings, questions_data
 
 def wrap_text(text, width):
     """Wrap text to specified width"""
@@ -99,8 +142,8 @@ def create_timer_clip(duration, start_time, settings):
     # Get video dimensions for positioning
     video_width = settings['video']['width']
     
-    # Create shape background
-    shape_surface = np.zeros((size, size, 3))
+    # Create shape background with alpha channel (RGBA)
+    shape_surface = np.zeros((size, size, 4))  # Changed from 3 to 4 channels
     
     if shape_type == 'circle':
         # Create circular mask
@@ -108,16 +151,21 @@ def create_timer_clip(duration, start_time, settings):
         y, x = np.ogrid[:size, :size]
         dist_from_center = np.sqrt((x - center)**2 + (y - center)**2)
         shape_mask = dist_from_center <= center
+        
+        # Set alpha to 0 (transparent) everywhere except the circle
+        shape_surface[..., 3] = 0  # Set alpha channel to transparent
+        shape_surface[shape_mask, 3] = 255  # Set alpha to opaque only for the circle
     else:
         # Create square mask (full surface)
         shape_mask = np.ones((size, size), dtype=bool)
+        shape_surface[..., 3] = 255  # Set alpha to opaque for square
     
     # Convert hex color to RGB and set shape color
     rgb_color = tuple(int(shape_color[i:i+2], 16) for i in (0, 2, 4))
-    shape_surface[shape_mask] = rgb_color
+    shape_surface[shape_mask, 0:3] = rgb_color  # Set RGB values where mask is True
     
-    # Create shape clip
-    shape_clip = ImageClip(shape_surface).set_duration(1)
+    # Create shape clip with transparency
+    shape_clip = ImageClip(shape_surface, ismask=False, transparent=True).set_duration(1)
     
     # Create timer text
     timer_text = str(int(duration - start_time))
@@ -185,15 +233,16 @@ def create_qa_video(question, answer, settings, audio_clip=None):
     
     try:
         # Create background based on settings
-        if 'background_image' in settings and os.path.exists(settings['background_image']):
-            # Use background image if specified and exists
+        if ('background_image' in settings and 
+            settings['background_image'] and 
+            os.path.exists(settings['background_image'])):
+            print(f"Using background image: {settings['background_image']}")
             background = ImageClip(settings['background_image'])
-            # Resize to match video dimensions if needed
             if background.size != (w, h):
                 background = background.resize((w, h))
             background = background.set_duration(total_duration)
         else:
-            # Fall back to color background if no image or image not found
+            print("Using color background")
             hex_color = settings['background']['color']
             rgb_color = tuple(int(hex_color.lstrip('#')[i:i+2], 16) for i in (0, 2, 4))
             background = ColorClip(size=(w, h), color=rgb_color).set_duration(total_duration)
@@ -231,15 +280,13 @@ def clean_text(text):
 
 def main():
     try:
-        # Load settings
-        settings = load_settings()
+        # Load settings and questions
+        settings, questions_data = load_settings()
         
-        # Read questions from JSON file
-        with open('questions.json', 'r') as file:
-            data = json.load(file)
+        # Get questions
+        questions = questions_data['questions']
         
         # If preview mode is enabled, limit the number of questions
-        questions = data['questions']
         if settings.get('preview_mode', {}).get('enabled', False):
             limit = settings['preview_mode'].get('questions_limit', 2)
             questions = questions[:limit]
