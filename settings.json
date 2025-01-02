@@ -1,3 +1,11 @@
 {
-  "project": "projects/disney_trivia/project_settings.json"
+  "project": "projects/disney_trivia/project_settings.json",
+  "font_directories": [
+    "/Library/Fonts/",
+    "/System/Library/Fonts/",
+    "/System/Library/Fonts/Supplemental/",
+    "C:\\Windows\\Fonts\\",
+    "/usr/share/fonts/",
+    "fonts/"
+  ]
 } 

@@ -5,7 +5,7 @@
     "opacity": 1.0
   },
   "text": {
-    "font": "Broadway",
+    "font": "Phosphate-Solid",
     "size": {
       "question": 70,
       "answer": 90,
@@ -27,19 +27,19 @@
     },
     "question": {
       "position": {
-        "x": 350,
+        "x": "center",
         "y": "center",
         "padding": 20
       },
-      "width": 800
+      "width": 1000
     },
     "answer": {
       "position": {
-        "x": 350,
+        "x": "center",
         "y": "center",
         "padding": 50
       },
-      "width": 800
+      "width": 1000
     },
     "alignment": "center",
     "wrap_width": 30
@@ -74,11 +74,11 @@
     }
   },
   "preview_mode": {
-    "enabled": true,
+    "enabled": false,
     "questions_limit": 1
   },
   "audio": {
-    "file": "/music/Upbeat Inspiration.mp3",
+    "file": "/music/gameshow-brazz-loop-3min.mp3",
     "volume": 1.0,
     "loop": true
   },
@@ -98,5 +98,5 @@
     "codec": "libx264",
     "preset": "ultrafast"
   },
-  "background_image": "/backgrounds/background-funfetti.jpg"
+  "background_image": "/backgrounds/background-disney2.png"
 } 

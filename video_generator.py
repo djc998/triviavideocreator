@@ -4,6 +4,7 @@ import json
 import os
 import textwrap
 import numpy as np
+from pathlib import Path
 
 # Configure MoviePy to use ImageMagick
 # if os.name == 'nt':  # for Windows
@@ -30,6 +31,15 @@ def load_settings():
     # Load project settings
     with open(project_settings_path, 'r') as file:
         project_settings = json.load(file)
+    
+    # Add font directories from main settings to project settings
+    project_settings['font_directories'] = main_settings.get('font_directories', [
+        '/Library/Fonts/',  # macOS
+        '/System/Library/Fonts/',  # macOS System
+        'C:\\Windows\\Fonts\\',  # Windows
+        '/usr/share/fonts/',  # Linux
+        os.path.join(os.path.dirname(__file__), 'fonts/')  # Local fonts directory
+    ])
     
     # Load questions
     questions_path = os.path.join(project_dir, project_settings['questions_file'])
@@ -97,28 +107,51 @@ def get_text_position(settings, clip_type, clip_width, clip_height, video_width,
     
     return (x_pos, y_pos)
 
+def get_font_path(font_name, settings):
+    """Get the full path for a font name"""
+    # Split font name and index if provided (e.g., "Phosphate:1" -> "Phosphate", "1")
+    font_parts = font_name.split(':')
+    base_font_name = font_parts[0]
+    
+    if len(font_parts) > 1:
+        # For TTC fonts with index, use the font family name with the style
+        if base_font_name == "Phosphate":
+            return "Phosphate-Solid" if font_parts[1] == "1" else "Phosphate"
+    
+    return base_font_name
+
 def create_text_clip(text, duration, clip_type='question', settings=None):
     wrapped_text = wrap_text(text, settings['text']['wrap_width'])
     
     # Get text settings
     font_size = settings['text']['size'][clip_type]
-    font = settings['text']['font']
+    font_name = settings['text']['font']
+    font = get_font_path(font_name, settings)
+    print(f"Creating text clip with font: {font}")  # Debug print
+    
     text_color = settings['text']['color']
     shadow_enabled = settings['text']['shadow']['enabled']
     outline_enabled = settings['text'].get('outline', {}).get('enabled', False)
     max_width = settings['text'][clip_type]['width']
     
     # Create main text clip with transparent background
-    main_clip = TextClip(wrapped_text, 
-                        fontsize=font_size, 
-                        color=text_color, 
-                        font=font, 
-                        method='label',
-                        align=settings['text']['alignment'],
-                        size=(max_width, None),
-                        bg_color='transparent',
-                        stroke_color=settings['text'].get('outline', {}).get('color', '#000000') if outline_enabled else None,
-                        stroke_width=settings['text'].get('outline', {}).get('thickness', 2) if outline_enabled else 0)
+    try:
+        main_clip = TextClip(
+            wrapped_text, 
+            fontsize=font_size, 
+            color=text_color, 
+            font=font,
+            method='label',
+            align=settings['text']['alignment'],
+            size=(max_width, None),
+            bg_color='transparent',
+            stroke_color=settings['text'].get('outline', {}).get('color', '#000000') if outline_enabled else None,
+            stroke_width=settings['text'].get('outline', {}).get('thickness', 2) if outline_enabled else 0
+        )
+        print(f"Successfully created text clip with font: {font}")
+    except Exception as e:
+        print(f"Error creating text clip with font {font}: {str(e)}")
+        raise
     
     if shadow_enabled:
         # Create shadow clip
@@ -202,13 +235,16 @@ def create_timer_clip(duration, start_time, settings):
     # Create shape clip with transparency
     shape_clip = ImageClip(shape_surface, ismask=False, transparent=True).set_duration(1)
     
-    # Create timer text
+    # Create timer text with proper font
     timer_text = str(int(duration - start_time))
+    font_name = settings['text']['font']
+    font = get_font_path(font_name, settings)  # Pass settings to get_font_path
+    
     text_clip = TextClip(
         timer_text, 
         fontsize=settings['text']['size']['timer'], 
         color=text_color,
-        font=settings['text']['font'],
+        font=font,  # Use resolved font path
         method='label',
         align='center',
         bg_color='transparent'
