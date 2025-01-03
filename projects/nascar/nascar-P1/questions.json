@@ -1,0 +1,206 @@
+{
+  "title": "Ultimate NASCAR Trivia Quiz - Part 1",
+  "description": "Test your knowledge of NASCAR's history, drivers, races, and rules with these 50 challenging questions!",
+  "questions": [
+    {
+      "question": "In what year was NASCAR founded?",
+      "answer": "1948"
+    },
+    {
+      "question": "Who is known as 'The King' in NASCAR?",
+      "answer": "Richard Petty"
+    },
+    {
+      "question": "How many members are there in a NASCAR pit crew?",
+      "answer": "Seven"
+    },
+    {
+      "question": "What does NASCAR stand for?",
+      "answer": "National Association for Stock Car Auto Racing"
+    },
+    {
+      "question": "Who won the first NASCAR-sanctioned race in 1948?",
+      "answer": "Jim Roper"
+    },
+    {
+      "question": "What is the longest track in the current NASCAR schedule?",
+      "answer": "Road America"
+    },
+    {
+      "question": "How many times did Dale Earnhardt Sr. win the NASCAR Cup Series championship?",
+      "answer": "Seven"
+    },
+    {
+      "question": "What is the name of NASCAR's most prestigious race?",
+      "answer": "Daytona 500"
+    },
+    {
+      "question": "Who was the first African-American driver to win a race in NASCAR's top division?",
+      "answer": "Wendell Scott"
+    },
+    {
+      "question": "What year was the first Daytona 500 held?",
+      "answer": "1959"
+    },
+    {
+      "question": "Which driver has the nickname 'The Intimidator'?",
+      "answer": "Dale Earnhardt Sr."
+    },
+    {
+      "question": "What is the shortest track in the NASCAR Cup Series?",
+      "answer": "Martinsville Speedway"
+    },
+    {
+      "question": "Who was the first driver to win the NASCAR championship seven times?",
+      "answer": "Richard Petty"
+    },
+    {
+      "question": "What is the name of the playoff system in NASCAR's top division?",
+      "answer": "NASCAR playoffs"
+    },
+    {
+      "question": "Which driver has won the most NASCAR Cup Series races?",
+      "answer": "Richard Petty"
+    },
+    {
+      "question": "What is the name of the trophy awarded to the NASCAR Cup Series champion?",
+      "answer": "Bill France Cup"
+    },
+    {
+      "question": "Who was the first woman to win a pole position in the NASCAR Cup Series?",
+      "answer": "Danica Patrick"
+    },
+    {
+      "question": "What is the name of NASCAR's second-tier national division?",
+      "answer": "Xfinity Series"
+    },
+    {
+      "question": "Which driver is known as 'Awesome Bill from Dawsonville'?",
+      "answer": "Bill Elliott"
+    },
+    {
+      "question": "What is the name of NASCAR's third-tier national division?",
+      "answer": "Camping World Truck Series"
+    },
+    {
+      "question": "Who was NASCAR's first three-time champion?",
+      "answer": "Lee Petty"
+    },
+    {
+      "question": "What is the name of the safety device mandatory for all NASCAR drivers since 2001?",
+      "answer": "HANS device"
+    },
+    {
+      "question": "Which driver has the nickname 'Smoke'?",
+      "answer": "Tony Stewart"
+    },
+    {
+      "question": "What is the name of the NASCAR race held on Independence Day weekend?",
+      "answer": "Coke Zero Sugar 400"
+    },
+    {
+      "question": "Who was the youngest driver to win a NASCAR Cup Series championship?",
+      "answer": "Jeff Gordon"
+    },
+    {
+      "question": "What is the name of the NASCAR track known as 'The Lady in Black'?",
+      "answer": "Darlington Raceway"
+    },
+    {
+      "question": "Which driver has won the most consecutive NASCAR Cup Series championships?",
+      "answer": "Jimmie Johnson"
+    },
+    {
+      "question": "What is the name of the NASCAR track known as 'The Monster Mile'?",
+      "answer": "Dover International Speedway"
+    },
+    {
+      "question": "Who was the first foreign-born driver to win a NASCAR Cup Series race?",
+      "answer": "Mario Andretti"
+    },
+    {
+      "question": "What is the name of the NASCAR race held on Memorial Day weekend?",
+      "answer": "Coca-Cola 600"
+    },
+    {
+      "question": "Which driver has the nickname 'Rowdy'?",
+      "answer": "Kyle Busch"
+    },
+    {
+      "question": "What is the name of the NASCAR track known as 'The Tricky Triangle'?",
+      "answer": "Pocono Raceway"
+    },
+    {
+      "question": "Who was the first driver to win a NASCAR race on his birthday?",
+      "answer": "Cale Yarborough"
+    },
+    {
+      "question": "What is the name of the NASCAR track known as 'The Magic Mile'?",
+      "answer": "New Hampshire Motor Speedway"
+    },
+    {
+      "question": "Which driver has won the most NASCAR All-Star Races?",
+      "answer": "Jimmie Johnson"
+    },
+    {
+      "question": "What is the name of the NASCAR track known as 'The Paperclip'?",
+      "answer": "Martinsville Speedway"
+    },
+    {
+      "question": "Who was the first driver to win a NASCAR Cup Series race in a Toyota?",
+      "answer": "Kyle Busch"
+    },
+    {
+      "question": "What is the name of the NASCAR track known as 'The World Center of Racing'?",
+      "answer": "Daytona International Speedway"
+    },
+    {
+      "question": "Which driver has the nickname 'Happy'?",
+      "answer": "Kevin Harvick"
+    },
+    {
+      "question": "What is the name of the NASCAR track known as 'The Last Great Colosseum'?",
+      "answer": "Bristol Motor Speedway"
+    },
+    {
+      "question": "Who was the first driver to win a NASCAR Cup Series race on a road course?",
+      "answer": "Chuck Stevenson"
+    },
+    {
+      "question": "What is the name of the NASCAR track known as 'The Action Track'?",
+      "answer": "Richmond Raceway"
+    },
+    {
+      "question": "Which driver has won the most NASCAR Cup Series races at Daytona?",
+      "answer": "Richard Petty"
+    },
+    {
+      "question": "What is the name of the NASCAR track known as 'The Brickyard'?",
+      "answer": "Indianapolis Motor Speedway"
+    },
+    {
+      "question": "Who was the first driver to win a NASCAR Cup Series race in a foreign-made car?",
+      "answer": "Mario Andretti"
+    },
+    {
+      "question": "What is the name of the NASCAR track known as 'The Lady in Red'?",
+      "answer": "Atlanta Motor Speedway"
+    },
+    {
+      "question": "Which driver has the nickname 'The Closer'?",
+      "answer": "Kevin Harvick"
+    },
+    {
+      "question": "What is the name of the NASCAR track known as 'The Glen'?",
+      "answer": "Watkins Glen International"
+    },
+    {
+      "question": "Who was the first driver to win a NASCAR Cup Series race from the pole position?",
+      "answer": "Bob Flock"
+    },
+    {
+      "question": "What is the name of the NASCAR track known as 'The Rock'?",
+      "answer": "Rockingham Speedway"
+    }
+  ]
+}

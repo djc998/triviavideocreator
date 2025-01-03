@@ -1,0 +1,110 @@
+{
+  "questions_file": "questions.json",
+  "background": {
+    "color": "#060CE9",
+    "opacity": 1.0
+  },
+  "text": {
+    "font": "Phosphate-Solid",
+    "size": {
+      "question": 70,
+      "answer": 90,
+      "timer": 80
+    },
+    "color": "#FFFFFF",
+    "shadow": {
+      "enabled": true,
+      "color": "#000000",
+      "offset": {
+        "x": 5,
+        "y": 5
+      }
+    },
+    "outline": {
+      "enabled": true,
+      "color": "#000000",
+      "thickness": 2
+    },
+    "question": {
+      "position": {
+        "x": "center",
+        "y": "center",
+        "padding": 20
+      },
+      "dimensions": {
+        "width": 1000,
+        "height": null
+      }
+    },
+    "answer": {
+      "position": {
+        "x": "center",
+        "y": "center",
+        "padding": 50
+      },
+      "dimensions": {
+        "width": 1000,
+        "height": null
+      }
+    },
+    "alignment": "center",
+    "wrap_width": 30
+  },
+  "timer": {
+    "shape": "square",
+    "circle": {
+      "size": 150,
+      "color": "#FFFFFF",
+      "position": {
+        "x": "right",
+        "y": 10, 
+        "padding": 50 
+      }
+    },
+    "square": {
+      "size": 140,
+      "color": "#FFFFFF",
+      "position": {
+        "x": "right", 
+        "y": 30, 
+        "padding": 30 
+      }
+    },
+    "text": {
+      "color": "#000000"
+    },
+    "sound": {
+      "enabled": false,
+      "file": "/sounds/tick.mp3",
+      "volume": 3.0
+    }
+  },
+  "preview_mode": {
+    "enabled": false,
+    "type": "questions",
+    "questions_limit": 1,
+    "duration_limit": 33
+  },
+  "audio": {
+    "file": "/music/gameshow-brazz-loop-3min.mp3",
+    "volume": 1.0,
+    "loop": true
+  },
+  "transitions": {
+    "type": "fade",
+    "duration": 0.5,
+    "crossfade_duration": 0.3
+  },
+  "timing": {
+    "question_duration": 10,
+    "answer_duration": 3
+  },
+  "video": {
+    "width": 1280,
+    "height": 720,
+    "fps": 24,
+    "codec": "libx264",
+    "preset": "ultrafast"
+  },
+  "background_image": "/backgrounds/background-nascar.png"
+} 
