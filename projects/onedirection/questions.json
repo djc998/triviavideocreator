@@ -1,0 +1,182 @@
+{
+  "title": "Ultimate One Direction Quiz",
+  "description": "Think you know everything about One Direction? Test your knowledge with these 50 questions covering their music, members, and unforgettable moments!",
+  "questions": [
+    {
+      "question": "In what year was One Direction formed?",
+      "answer": "2010"
+    },
+    {
+      "question": "Which television show did One Direction originate from?",
+      "answer": "The X Factor"
+    },
+    {
+      "question": "What is the title of One Direction's debut album?",
+      "answer": "Up All Night"
+    },
+    {
+      "question": "Which member left the band in 2015?",
+      "answer": "Zayn Malik"
+    },
+    {
+      "question": "What was One Direction's first single?",
+      "answer": "'What Makes You Beautiful'"
+    },
+    {
+      "question": "How many studio albums did One Direction release?",
+      "answer": "Five"
+    },
+    {
+      "question": "What is the name of One Direction's second album?",
+      "answer": "'Take Me Home'"
+    },
+    {
+      "question": "Which song features the lyric 'I wish I could be there for you'?",
+      "answer": "'Little Things'"
+    },
+    {
+      "question": "Who is the oldest member of One Direction?",
+      "answer": "Louis Tomlinson"
+    },
+    {
+      "question": "What year did One Direction announce their hiatus?",
+      "answer": "2016"
+    },
+    {
+      "question": "Which album includes the hit 'Best Song Ever'?",
+      "answer": "'Midnight Memories'"
+    },
+    {
+      "question": "'Steal My Girl' is a single from which One Direction album?",
+      "answer": "'Four'"
+    },
+    {
+      "question": "'History' is a song from which of their albums?",
+      "answer": "'Made in the A.M.'"
+    },
+    {
+      "question": "'Live While We’re Young' is from which album?",
+      "answer": "'Take Me Home'"
+    },
+    {
+      "question": "'Drag Me Down' was released as a single after which member left the band?",
+      "answer": "Zayn Malik"
+    },
+    {
+      "question": "'You & I' is a single from which album?",
+      "answer": "'Midnight Memories'"
+    },
+    {
+      "question": "'Night Changes' is featured on which album?",
+      "answer": "'Four'"
+    },
+    {
+      "question": "'Perfect' is a single from which of their last albums?",
+      "answer": "'Made in the A.M.'"
+    },
+    {
+      "question": "'One Thing' is a song from which album?",
+      "answer": "'Up All Night'"
+    },
+    {
+      "question": "'Kiss You' was a single from which album?",
+      "answer": "'Take Me Home'"
+    },
+    {
+      "question": "'Story of My Life' is featured on which album?",
+      "answer": "'Midnight Memories'"
+    },
+    {
+      "question": "'Gotta Be You' appears on which of their albums?",
+      "answer": "'Up All Night'"
+    },
+    {
+      "question": "'They Don't Know About Us' is a track from which album?",
+      "answer": "'Take Me Home'"
+    },
+    {
+      "question": "'Last First Kiss' is found on which album?",
+      "answer": "'Take Me Home'"
+    },
+    {
+      "question": "'Everything About You' is from which album?",
+      "answer": "'Up All Night'"
+    },
+    {
+      "question": "'No Control' is a song from which album?",
+      "answer": "'Four'"
+    },
+    {
+      "question": "'Where Do Broken Hearts Go' appears on which album?",
+      "answer": "'Four'"
+    },
+    {
+      "question": "'Change Your Ticket' is a bonus track on which album?",
+      "answer": "'Four'"
+    },
+    {
+      "question": "'Illusion' is a song featured on which album?",
+      "answer": "'Four'"
+    },
+  	{
+  	 	"question":"Who wrote 'What Makes You Beautiful' for One Direction?", 
+  	 	"answer":"Savan Kotecha, Carl Falk, and Rami Yacoub"
+  	},
+  	{
+  	 	"question":"Which member was known for his curly hair?", 
+  	 	"answer":"Harry Styles"
+  	},
+  	{
+  	 	"question":"What year did Zayn Malik leave One Direction?", 
+  	 	"answer":"2015"
+  	},
+  	{
+  	 	"question":"Who was the last member to join One Direction?", 
+  	 	"answer":"Zayn Malik"
+  	},
+  	{
+  	 	"question":"Which song features the line 'If only you saw what I can see'?", 
+  	 	"answer":"'Truly Madly Deeply'"
+  	},
+  	{
+  	 	"question":"What was the title of One Direction's concert film released in 2013?", 
+  	 	"answer":"'One Direction: This Is Us'"
+  	},
+  	{
+  	 	"question":"Who directed 'One Direction: This Is Us'?", 
+  	 	"answer":"Morgan Spurlock"
+  	},
+  	{
+  	 	"question":"In what year did they release 'Made in the A.M.'?", 
+  	 	"answer":"2015"
+  	},
+  	{
+  	 	"question":"Which member has pursued a successful solo career as an actor?", 
+  	 	"answer":"Harry Styles"
+  	},
+  	{
+  	 	"question":"What was the theme of their last tour, 'On The Road Again Tour'?", 
+  	 	"answer":"To promote 'Four' and 'Made in the A.M.' albums"
+  	},
+  	{
+      	"question":"Which song includes the lyrics 'And all my life, you stood by me'?", 
+      	"answer":"'History'"
+    	},
+     {
+      	"question":"Who sang lead vocals on 'Little Things'?", 
+      	"answer":"Liam Payne and Ed Sheeran (co-writer)"
+    	},
+     {
+      	"question":"Which member has a sibling named Félicité?", 
+      	"answer":"Louis Tomlinson"
+    	},
+     {
+      	"question":"What year did they perform at Madison Square Garden for the first time?", 
+      	"answer":"2012"
+    	},
+     {
+      	"question":"Who was known for his love of socks and sandals?", 
+      	"answer":"Niall Horan"
+    	}
+  ]
+}

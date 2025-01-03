@@ -1,5 +1,7 @@
 {
-  "project": "projects/disney_trivia/project_settings.json",
+  "project": "projects/onedirection-P6/project_settings.json",
+  "project_intro": "projects/onedirection-P6/project_intro.json",
+  "project_end": "projects/onedirection-P6/project_end.json",
   "font_directories": [
     "/Library/Fonts/",
     "/System/Library/Fonts/",

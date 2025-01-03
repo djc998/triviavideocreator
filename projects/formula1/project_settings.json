@@ -1,0 +1,102 @@
+{
+  "questions_file": "questions.json",
+  "background": {
+    "color": "#060CE9",
+    "opacity": 1.0
+  },
+  "text": {
+    "font": "Phosphate-Solid",
+    "size": {
+      "question": 70,
+      "answer": 90,
+      "timer": 80
+    },
+    "color": "#FFFFFF",
+    "shadow": {
+      "enabled": true,
+      "color": "#000000",
+      "offset": {
+        "x": 5,
+        "y": 5
+      }
+    },
+    "outline": {
+      "enabled": true,
+      "color": "#000000",
+      "thickness": 2
+    },
+    "question": {
+      "position": {
+        "x": "center",
+        "y": "bottom",
+        "padding": 80
+      },
+      "width": 1000
+    },
+    "answer": {
+      "position": {
+        "x": "center",
+        "y": "bottom",
+        "padding": 50
+      },
+      "width": 1000
+    },
+    "alignment": "center",
+    "wrap_width": 30
+  },
+  "timer": {
+    "shape": "circle",
+    "circle": {
+      "size": 100,
+      "color": "#FFFFFF",
+      "position": {
+        "x": "center",
+        "y": 240, 
+        "padding": 20 
+      }
+    },
+    "square": {
+      "size": 100,
+      "color": "#FFFFFF",
+      "position": {
+        "x": "center", 
+        "y": 20, 
+        "padding": 20 
+      }
+    },
+    "text": {
+      "color": "#000000"
+    },
+    "sound": {
+      "enabled": false,
+      "file": "/sounds/tick.mp3",
+      "volume": 3.0
+    }
+  },
+  "preview_mode": {
+    "enabled": false,
+    "questions_limit": 1
+  },
+  "audio": {
+    "file": "/music/gameshow-brazz-loop-3min.mp3",
+    "volume": 1.0,
+    "loop": true
+  },
+  "transitions": {
+    "type": "fade",
+    "duration": 0.5,
+    "crossfade_duration": 0.3
+  },
+  "timing": {
+    "question_duration": 10,
+    "answer_duration": 5
+  },
+  "video": {
+    "width": 1280,
+    "height": 720,
+    "fps": 24,
+    "codec": "libx264",
+    "preset": "ultrafast"
+  },
+  "background_image": "/backgrounds/background-f1.png"
+} 

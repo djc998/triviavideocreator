@@ -20,6 +20,8 @@ wheels/
 *.egg-info/
 .installed.cfg
 *.egg
+*.tcc
+*.ttf   
 
 # Virtual Environment
 venv/

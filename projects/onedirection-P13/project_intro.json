@@ -1,0 +1,102 @@
+{
+  "enabled": true,
+  "duration": 8,
+  "background": {
+    "color": "#060CE9",
+    "opacity": 1.0,
+    "image": "/backgrounds/onedirection-youtubecover.png"
+  },
+  "images": [
+    {
+      "file": "images/subscribebutton.png",
+      "position": {
+        "x": "right",
+        "y": "top",
+        "padding": 30
+      },
+      "width": 250,
+      "timing": {
+        "start": 1,
+        "duration": 7,
+        "fade": {
+          "enabled": true,
+          "duration": 0.5
+        }
+      }
+    }
+  ],
+  "texts": [
+    {
+      "content": "Get Ready!",
+      "font": "Phosphate-Solid",
+      "size": 80,
+      "color": "#ffff00",
+      "position": {
+        "x": "center",
+        "y": 400,
+        "padding": 20
+      },
+      "dimensions": {
+        "width": 800,
+        "height": null
+      },
+      "timing": {
+        "start": 5,
+        "duration": 5,
+        "fade": {
+          "enabled": true,
+          "duration": 0.5
+        }
+      },
+      "shadow": {
+        "enabled": true,
+        "color": "#000000",
+        "offset": {
+          "x": 5,
+          "y": 5
+        }
+      },
+      "outline": {
+        "enabled": true,
+        "color": "#000000",
+        "thickness": 2
+      }
+    },
+    {
+      "content": "Part 13",
+      "font": "Phosphate-Solid",
+      "size": 80,
+      "color": "#ffff00",
+      "position": {
+        "x": 300,
+        "y": "bottom",
+        "padding": 20
+      },
+      "dimensions": {
+        "width": 200,
+        "height": null
+      },
+      "timing": {
+        "start": 1,
+        "duration": 10,
+        "fade": {
+          "enabled": true,
+          "duration": 0.5
+        }
+      },
+      "shadow": {
+        "enabled": false,
+        "color": "#000000",
+        "offset": {
+          "x": 5,
+          "y": 5
+        }
+      },
+      "outline": {
+        "enabled": true,
+        "color": "#000000",
+        "thickness": 2
+      }
+    }
+  ]
+} 
