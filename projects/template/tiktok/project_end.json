@@ -1,0 +1,52 @@
+{
+  "enabled": true,
+  "duration": 3,
+  "background": {
+    "color": "#060CE9",
+    "opacity": 1.0,
+    "image": "backgrounds/vertical_triviashowdownlogo.png"
+  },
+  "images": [
+    {
+      "file": "images/follow-tiktok.png",
+      "position": {
+        "x": "center",
+        "y": "bottom",
+        "padding": 100
+      },
+      "width": 200,
+      "timing": {
+        "start": 0,
+        "duration": 3,
+        "fade": {
+          "enabled": true,
+          "duration": 0.3
+        }
+      }
+    }
+  ],
+  "texts": [
+    {
+      "content": "Follow for More!",
+      "font": "Phosphate-Solid",
+      "size": 70,
+      "color": "#FFFFFF",
+      "position": {
+        "x": "center",
+        "y": "top",
+        "padding": 60
+      }
+    },
+    {
+      "content": "",
+      "font": "Phosphate-Solid",
+      "size": 60,
+      "color": "#FFFFFF",
+      "position": {
+        "x": "center",
+        "y": "top",
+        "padding": 20
+      }
+    }
+  ]
+} 

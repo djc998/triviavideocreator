@@ -23,14 +23,24 @@ def load_settings():
     with open('settings.json', 'r') as file:
         main_settings = json.load(file)
     
+    # Determine which format to use (standard or tiktok)
+    if main_settings['tiktok']['enabled']:
+        format_settings = main_settings['tiktok']
+        print("Using TikTok format settings")
+    elif main_settings['standard']['enabled']:
+        format_settings = main_settings['standard']
+        print("Using standard format settings")
+    else:
+        raise ValueError("Neither standard nor TikTok format is enabled in settings")
+    
     # Get project paths
-    project_settings_path = main_settings['project']
+    project_settings_path = format_settings['project']
     project_dir = os.path.dirname(project_settings_path)
     print(f"Project directory: {project_dir}")
     
     # Store intro and end paths in project settings
-    project_intro_path = main_settings.get('project_intro', '')
-    project_end_path = main_settings.get('project_end', '')
+    project_intro_path = format_settings.get('project_intro', '')
+    project_end_path = format_settings.get('project_end', '')
     
     # Load project settings
     with open(project_settings_path, 'r') as file:
@@ -48,6 +58,10 @@ def load_settings():
         '/usr/share/fonts/',  # Linux
         os.path.join(os.path.dirname(__file__), 'fonts/')  # Local fonts directory
     ])
+    
+    # Add TikTok-specific settings if using TikTok format
+    if main_settings['tiktok']['enabled']:
+        project_settings['tiktok_output'] = main_settings['tiktok']['output']
     
     # Load questions
     questions_path = os.path.join(project_dir, project_settings['questions_file'])
@@ -129,100 +143,114 @@ def get_font_path(font_name, settings):
     return base_font_name
 
 def create_text_clip(text, duration, clip_type='question', settings=None):
-    wrapped_text = wrap_text(text, settings['text']['wrap_width'])
-    
+    """Create a text clip with the specified settings"""
     # Get text settings
-    font_size = settings['text']['size'][clip_type]
+    if clip_type == 'custom' and 'custom' in settings['text']:
+        font_size = settings['text']['size']['custom']
+    else:
+        font_size = settings['text']['size'][clip_type]
+    
+    print(f"Creating text clip with size: {font_size}")
+    
     font_name = settings['text']['font']
     font = get_font_path(font_name, settings)
-    print(f"Creating text clip with font: {font}")
     
-    text_color = settings['text']['color']
-    shadow_enabled = settings['text']['shadow']['enabled']
-    outline_enabled = settings['text'].get('outline', {}).get('enabled', False)
-    
-    # Get dimensions - handle both old and new format
+    # Get dimensions and text handling settings
     if clip_type == 'custom' and 'dimensions' in settings['text']['custom']:
         dimensions = settings['text']['custom']['dimensions']
     else:
-        # For question/answer clips, check for both new and old format
         clip_settings = settings['text'][clip_type]
-        if 'dimensions' in clip_settings:
-            dimensions = clip_settings['dimensions']
-        else:
-            # Fallback to old format or default
-            dimensions = {
-                'width': clip_settings.get('width', 1000),
-                'height': None
-            }
+        dimensions = clip_settings.get('dimensions', {'width': None, 'height': None})
     
-    max_width = dimensions.get('width', None)
-    max_height = dimensions.get('height', None)
-    
-    # Create size tuple based on dimensions
-    size = (max_width, max_height) if max_width or max_height else None
-    
-    # Create main text clip with transparent background
+    # Create initial text clip without wrapping
     try:
-        main_clip = TextClip(
-            wrapped_text, 
-            fontsize=font_size, 
-            color=text_color, 
+        # First create clip without any size constraints to check natural size
+        test_clip = TextClip(
+            text,
+            fontsize=font_size,
+            color=settings['text']['color'],
             font=font,
             method='label',
             align=settings['text']['alignment'],
-            size=size,  # Now using both width and height if specified
-            bg_color='transparent',
-            stroke_color=settings['text'].get('outline', {}).get('color', '#000000') if outline_enabled else None,
-            stroke_width=settings['text'].get('outline', {}).get('thickness', 2) if outline_enabled else 0
+            bg_color='transparent'
         )
-        print(f"Successfully created text clip with font: {font}")
-        if size:
-            print(f"Text clip dimensions: {main_clip.size}")
+        
+        # If width constraint exists and text is too wide
+        if dimensions['width'] and test_clip.size[0] > dimensions['width']:
+            # Calculate how many characters can fit per line
+            chars_per_line = int((dimensions['width'] / test_clip.size[0]) * len(text))
+            # Wrap text to multiple lines
+            wrapped_text = wrap_text(text, chars_per_line)
+        else:
+            wrapped_text = text
+        
+        # Create final clip with wrapped text
+        main_clip = TextClip(
+            wrapped_text,
+            fontsize=font_size,
+            color=settings['text']['color'],
+            font=font,
+            method='label',
+            align=settings['text']['alignment'],
+            bg_color='transparent',
+            stroke_color=settings['text'].get('outline', {}).get('color', '#000000') if settings['text'].get('outline', {}).get('enabled', False) else None,
+            stroke_width=settings['text'].get('outline', {}).get('thickness', 2) if settings['text'].get('outline', {}).get('enabled', False) else 0
+        )
+        
+        print(f"Created text clip with size {font_size}, dimensions: {main_clip.size}")
+        
+        # Create shadow if enabled
+        if settings['text']['shadow']['enabled']:
+            shadow_offset = settings['text']['shadow']['offset']
+            shadow_color = settings['text']['shadow']['color']
+            
+            shadow = TextClip(
+                wrapped_text,
+                fontsize=font_size,
+                color=shadow_color,
+                font=font,
+                method='label',
+                align=settings['text']['alignment'],
+                size=main_clip.size,
+                bg_color='transparent'
+            )
+            
+            # Create composite with shadow
+            combined_clip = CompositeVideoClip(
+                [
+                    shadow.set_position((shadow_offset['x'], shadow_offset['y'])),
+                    main_clip.set_position('center')
+                ],
+                size=main_clip.size
+            )
+        else:
+            combined_clip = main_clip
+        
+        # Get clip dimensions for positioning
+        clip_width = combined_clip.size[0]
+        clip_height = combined_clip.size[1]
+        
+        # Calculate position
+        if clip_type != 'custom':
+            position = get_text_position(
+                settings,
+                clip_type,
+                clip_width,
+                clip_height,
+                settings['video']['width'],
+                settings['video']['height']
+            )
+            combined_clip = combined_clip.set_position(position)
+        
+        # Set duration and add crossfade
+        combined_clip = combined_clip.set_duration(duration)
+        combined_clip = combined_clip.crossfadein(settings['transitions']['duration'])
+        
+        return combined_clip
+        
     except Exception as e:
-        print(f"Error creating text clip with font {font}: {str(e)}")
+        print(f"Error creating text clip: {str(e)}")
         raise
-    
-    if shadow_enabled:
-        # Create shadow clip
-        shadow_clip = TextClip(wrapped_text,
-                             fontsize=font_size,
-                             color=settings['text']['shadow']['color'],
-                             font=font,
-                             method='label',
-                             align=settings['text']['alignment'],
-                             size=(max_width, None),
-                             bg_color='transparent')
-        
-        # Offset shadow
-        x_offset = settings['text']['shadow']['offset']['x']
-        y_offset = settings['text']['shadow']['offset']['y']
-        shadow_clip = shadow_clip.set_position(lambda t: (x_offset, y_offset))
-        
-        # Combine shadow and main text
-        combined_clip = CompositeVideoClip([shadow_clip, main_clip])
-    else:
-        combined_clip = main_clip
-    
-    # Get the actual height of the clip
-    clip_height = combined_clip.size[1]
-    
-    # Calculate position
-    position = get_text_position(
-        settings, 
-        clip_type, 
-        max_width, 
-        clip_height,  # Pass the actual clip height
-        settings['video']['width'], 
-        settings['video']['height']
-    )
-    
-    # Set position, duration and fade
-    combined_clip = combined_clip.set_position(position)
-    combined_clip = combined_clip.set_duration(duration)
-    combined_clip = combined_clip.crossfadein(settings['transitions']['duration'])
-    
-    return combined_clip
 
 def create_timer_clip(duration, start_time, settings):
     # Get timer settings
@@ -330,52 +358,103 @@ def create_timer_clip(duration, start_time, settings):
     return combined_clip
 
 def create_qa_video(question, answer, settings, audio_clip=None):
-    # Get video dimensions and durations
-    w = settings['video']['width']
-    h = settings['video']['height']
-    q_duration = settings['timing']['question_duration']
-    a_duration = settings['timing']['answer_duration']
-    total_duration = q_duration + a_duration
-    
+    """Create a video clip for a question and answer"""
     try:
-        # Create background based on settings
-        if ('background_image' in settings and 
-            settings['background_image'] and 
-            os.path.exists(settings['background_image'])):
+        # Get video dimensions
+        w = settings['video']['width']
+        h = settings['video']['height']
+        
+        # Get durations
+        q_duration = settings['timing']['question_duration']
+        a_duration = settings['timing']['answer_duration']
+        total_duration = q_duration + a_duration
+        
+        # Create background
+        if settings.get('background_image'):
             print(f"Using background image: {settings['background_image']}")
             background = ImageClip(settings['background_image'])
             if background.size != (w, h):
                 background = background.resize((w, h))
-            background = background.set_duration(total_duration)
         else:
-            print("Using color background")
             hex_color = settings['background']['color']
             rgb_color = tuple(int(hex_color.lstrip('#')[i:i+2], 16) for i in (0, 2, 4))
-            background = ColorClip(size=(w, h), color=rgb_color).set_duration(total_duration)
+            background = ColorClip(size=(w, h), color=rgb_color)
         
-        # Create question and answer clips
+        background = background.set_duration(total_duration)
+        
+        # Create clips list with background
+        clips = [background]
+        
+        # Create question text
         question_clip = create_text_clip(question, q_duration, 'question', settings)
-        answer_clip = create_text_clip(answer, a_duration, 'answer', settings).set_start(q_duration)
+        question_clip = question_clip.set_start(0)
+        clips.append(question_clip)
         
-        # Create base composite without timer
-        base_composite = CompositeVideoClip([background, question_clip, answer_clip], size=(w, h))
+        # Create answer text
+        answer_clip = create_text_clip(answer, a_duration, 'answer', settings)
+        answer_clip = answer_clip.set_start(q_duration)
+        clips.append(answer_clip)
         
         # Create timer clips for question duration only
-        timer_clips = []
         for i in range(q_duration):
             timer = create_timer_clip(q_duration, i, settings)
-            timer_clips.append(timer.set_start(i))
+            timer = timer.set_start(i)
+            clips.append(timer)
         
-        # Create final composite with timer on top
-        final_clip = CompositeVideoClip([base_composite] + timer_clips, size=(w, h))
+        # Add overlays if present
+        if 'overlays' in settings['text']:
+            for overlay in settings['text']['overlays']:
+                try:
+                    # Create overlay text clip
+                    overlay_duration = total_duration if overlay['timing']['duration'] == 'full' else overlay['timing']['duration']
+                    overlay_clip = create_text_clip(
+                        text=overlay['content'],
+                        duration=overlay_duration,
+                        clip_type='custom',
+                        settings={
+                            'text': {
+                                'font': overlay['font'],
+                                'size': {'custom': overlay['size']},
+                                'color': overlay['color'],
+                                'shadow': overlay.get('shadow', {'enabled': False}),
+                                'outline': overlay.get('outline', {'enabled': False}),
+                                'custom': {
+                                    'position': overlay['position'],
+                                    'dimensions': overlay.get('dimensions', {'width': 400, 'height': None})
+                                },
+                                'alignment': 'center',
+                                'wrap_width': settings['text']['wrap_width']
+                            },
+                            'video': settings['video'],
+                            'transitions': settings['transitions']
+                        }
+                    )
+                    
+                    # Apply timing
+                    overlay_clip = overlay_clip.set_start(overlay['timing']['start'])
+                    
+                    # Apply fade if enabled
+                    if overlay['timing'].get('fade', {}).get('enabled', True):
+                        fade_duration = overlay['timing']['fade'].get('duration', settings['transitions']['duration'])
+                        overlay_clip = overlay_clip.crossfadein(fade_duration)
+                    
+                    clips.append(overlay_clip)
+                    print(f"Added overlay text: {overlay['content']}")
+                    
+                except Exception as e:
+                    print(f"Error creating overlay: {str(e)}")
+                    continue
+        
+        # Combine all clips
+        final_clip = CompositeVideoClip(clips, size=(w, h))
+        final_clip = final_clip.set_duration(total_duration)
         
         # Add audio if provided
         if audio_clip:
             final_clip = final_clip.set_audio(audio_clip.subclip(0, total_duration))
-            
-        final_clip = final_clip.set_duration(total_duration)
+        
         return final_clip
-    
+        
     except Exception as e:
         print(f"Error in create_qa_video: {str(e)}")
         raise
@@ -384,7 +463,7 @@ def clean_text(text):
     """Clean text by replacing escaped quotes and other potential issues"""
     return text.replace('\\"', '"')
 
-def create_bookend_clip(settings, project_dir, clip_type='intro'):
+def create_bookend_clip(settings, project_dir, clip_type='intro', part_number=None, total_parts=None):
     """Create intro or end clip based on settings"""
     try:
         # Load clip settings
@@ -472,17 +551,15 @@ def create_bookend_clip(settings, project_dir, clip_type='intro'):
         
         # Add text clips
         for text_config in clip_settings['texts']:
-            # Convert from old format to new if necessary
-            if 'width' in text_config:
-                dimensions = {
-                    'width': text_config.pop('width'),
-                    'height': None
-                }
-            else:
-                dimensions = text_config.get('dimensions', {'width': 1000, 'height': None})
+            # Handle part number replacement
+            content = text_config['content']
+            if part_number is not None:
+                content = content.replace('{part_number}', str(part_number))
+            if total_parts is not None:
+                content = content.replace('{total_parts}', str(total_parts))
             
             text_clip = create_text_clip(
-                text=text_config['content'],
+                text=content,  # Use modified content
                 duration=text_config.get('timing', {}).get('duration', duration),
                 clip_type='custom',
                 settings={
@@ -494,7 +571,7 @@ def create_bookend_clip(settings, project_dir, clip_type='intro'):
                         'outline': text_config.get('outline', {'enabled': False}),
                         'custom': {
                             'position': text_config['position'],
-                            'dimensions': dimensions
+                            'dimensions': text_config.get('dimensions', {'width': 1000, 'height': None})
                         },
                         'alignment': 'center',
                         'wrap_width': settings['text']['wrap_width']
@@ -587,128 +664,196 @@ def main():
         # Load settings and questions
         settings, questions_data, project_dir = load_settings()
         
-        # Create intro clip if path is specified
-        intro_clip = None
-        if settings.get('project_intro'):
-            print("\nAttempting to create intro clip...")
-            intro_clip = create_bookend_clip(settings, project_dir, 'intro')
-        else:
-            print("\nNo intro clip path specified, skipping...")
-        
-        # Create end clip if path is specified
-        end_clip = None
-        if settings.get('project_end'):
-            print("\nAttempting to create end clip...")
-            end_clip = create_bookend_clip(settings, project_dir, 'end')
-        else:
-            print("\nNo end clip path specified, skipping...")
-        
-        # Get questions
-        questions = questions_data['questions']
-        
-        # Handle preview mode
-        if settings.get('preview_mode', {}).get('enabled', False):
-            preview_type = settings['preview_mode'].get('type', 'questions')
+        if settings.get('tiktok_output'):  # If TikTok format is enabled
+            questions = questions_data['questions']
+            questions_per_video = settings['tiktok_output']['questions_per_video']
+            number_of_videos = settings['tiktok_output']['number_of_videos']
+            filename_prefix = settings['tiktok_output']['filename_prefix']
             
-            if preview_type == 'questions':
-                limit = settings['preview_mode'].get('questions_limit', 2)
-                questions = questions[:limit]
-                print(f"Preview mode enabled: Processing first {limit} questions")
-            elif preview_type == 'duration':
-                duration_limit = settings['preview_mode'].get('duration_limit', 30)
-                total_time = 0
-                preview_questions = []
+            # Calculate total questions needed
+            total_questions_needed = questions_per_video * number_of_videos
+            if total_questions_needed > len(questions):
+                print(f"Warning: Not enough questions for {number_of_videos} videos with {questions_per_video} questions each")
+                number_of_videos = len(questions) // questions_per_video
+                print(f"Adjusting to {number_of_videos} videos")
+            
+            # Generate each TikTok video
+            for video_num in range(number_of_videos):
+                print(f"\nGenerating TikTok video {video_num + 1} of {number_of_videos}")
+                start_idx = video_num * questions_per_video
+                end_idx = start_idx + questions_per_video
+                video_questions = questions[start_idx:end_idx]
                 
-                # Add intro duration if present
-                if intro_clip:
-                    total_time += intro_clip.duration
-                    print(f"Including intro duration: {intro_clip.duration} seconds")
+                clips = []
                 
-                # Reserve time for end clip if present
-                end_clip_duration = end_clip.duration if end_clip else 0
-                available_time = duration_limit - end_clip_duration
+                # Create intro clip with part number if enabled
+                if settings.get('project_intro'):
+                    print(f"\nCreating intro for part {video_num + 1}")
+                    intro_clip = create_bookend_clip(settings, project_dir, 'intro', 
+                                                   part_number=video_num + 1,
+                                                   total_parts=number_of_videos)
+                    if intro_clip:
+                        clips.append(intro_clip)
                 
-                if end_clip:
-                    print(f"Reserving {end_clip_duration} seconds for end clip")
+                # Create question clips for this video
+                print(f"\nCreating {len(video_questions)} question clips...")
+                for i, qa in enumerate(video_questions):
+                    print(f"Creating clip for question {i + 1}")
+                    clip = create_qa_video(
+                        question=clean_text(qa['question']),
+                        answer=clean_text(qa['answer']),
+                        settings=settings,
+                        audio_clip=None
+                    )
+                    clips.append(clip)
                 
-                # Add questions until we hit the available time limit
-                for q in questions:
-                    clip_duration = settings['timing']['question_duration'] + settings['timing']['answer_duration']
+                # Create end clip with part number if enabled
+                if settings.get('project_end'):
+                    print(f"\nCreating end clip for part {video_num + 1}")
+                    end_clip = create_bookend_clip(settings, project_dir, 'end',
+                                                 part_number=video_num + 1,
+                                                 total_parts=number_of_videos)
+                    if end_clip:
+                        clips.append(end_clip)
+                
+                # Generate output filename
+                output_filename = f"{filename_prefix}_{video_num + 1}.mp4"
+                print(f"\nCreating video file: {output_filename}")
+                
+                # Concatenate video clips
+                final_video = concatenate_videoclips(clips, method="compose")
+                
+                # Write final video
+                final_video.write_videofile(
+                    output_filename,
+                    fps=settings['video']['fps'],
+                    codec=settings['video'].get('codec', 'libx264'),
+                    preset=settings['video'].get('preset', 'medium')
+                )
+                
+        else:  # Standard video format
+            # Create intro clip if path is specified
+            intro_clip = None
+            if settings.get('project_intro'):
+                print("\nAttempting to create intro clip...")
+                intro_clip = create_bookend_clip(settings, project_dir, 'intro')
+            else:
+                print("\nNo intro clip path specified, skipping...")
+            
+            # Create end clip if path is specified
+            end_clip = None
+            if settings.get('project_end'):
+                print("\nAttempting to create end clip...")
+                end_clip = create_bookend_clip(settings, project_dir, 'end')
+            else:
+                print("\nNo end clip path specified, skipping...")
+            
+            # Get questions
+            questions = questions_data['questions']
+            
+            # Handle preview mode
+            if settings.get('preview_mode', {}).get('enabled', False):
+                preview_type = settings['preview_mode'].get('type', 'questions')
+                
+                if preview_type == 'questions':
+                    limit = settings['preview_mode'].get('questions_limit', 2)
+                    questions = questions[:limit]
+                    print(f"Preview mode enabled: Processing first {limit} questions")
+                elif preview_type == 'duration':
+                    duration_limit = settings['preview_mode'].get('duration_limit', 30)
+                    total_time = 0
+                    preview_questions = []
                     
-                    if total_time + clip_duration <= available_time:
-                        preview_questions.append(q)
-                        total_time += clip_duration
-                        print(f"Added question, total duration now: {total_time} seconds")
-                    else:
-                        print(f"Duration limit ({available_time}s) would be exceeded, stopping")
-                        break
-                
-                questions = preview_questions
-                total_with_end = total_time + end_clip_duration
-                print(f"Preview mode enabled: Processing {len(questions)} questions")
-                print(f"Total duration will be: {total_with_end} seconds")
-        
-        # Create video clips
-        clips = []
-        
-        # Add intro if present
-        if intro_clip:
-            print("Adding intro clip to video")
-            clips.append(intro_clip)
-        
-        # Add question clips
-        print("\nCreating question clips...")
-        for i, qa in enumerate(questions):
-            print(f"Creating clip for question {i+1}")
-            clip = create_qa_video(
-                question=clean_text(qa['question']),
-                answer=clean_text(qa['answer']),
-                settings=settings,
-                audio_clip=None
-            )
-            clips.append(clip)
-        
-        # Add end clip if present
-        if end_clip:
-            print("Adding end clip to video")
-            clips.append(end_clip)
+                    # Add intro duration if present
+                    if intro_clip:
+                        total_time += intro_clip.duration
+                        print(f"Including intro duration: {intro_clip.duration} seconds")
+                    
+                    # Reserve time for end clip if present
+                    end_clip_duration = end_clip.duration if end_clip else 0
+                    available_time = duration_limit - end_clip_duration
+                    
+                    if end_clip:
+                        print(f"Reserving {end_clip_duration} seconds for end clip")
+                    
+                    # Add questions until we hit the available time limit
+                    for q in questions:
+                        clip_duration = settings['timing']['question_duration'] + settings['timing']['answer_duration']
+                        
+                        if total_time + clip_duration <= available_time:
+                            preview_questions.append(q)
+                            total_time += clip_duration
+                            print(f"Added question, total duration now: {total_time} seconds")
+                        else:
+                            print(f"Duration limit ({available_time}s) would be exceeded, stopping")
+                            break
+                    
+                    questions = preview_questions
+                    total_with_end = total_time + end_clip_duration
+                    print(f"Preview mode enabled: Processing {len(questions)} questions")
+                    print(f"Total duration will be: {total_with_end} seconds")
             
-        print(f"Final video will have {len(clips)} clips")
-        
-        # Concatenate video clips
-        final_video = concatenate_videoclips(clips, method="compose")
-        
-        # Add audio if specified
-        if 'audio' in settings and settings['audio'].get('file'):
-            try:
-                # Load audio file
-                audio = AudioFileClip(settings['audio']['file'])
-                
-                # Loop audio if needed
-                if settings['audio'].get('loop', False):
-                    total_duration = final_video.duration
-                    num_loops = int(np.ceil(total_duration / audio.duration))
-                    audio_clips = [audio] * num_loops
-                    audio = concatenate_audioclips(audio_clips).subclip(0, total_duration)
-                
-                # Set volume if specified
-                if 'volume' in settings['audio']:
-                    audio = audio.volumex(settings['audio']['volume'])
-                
-                # Combine audio with video
-                final_video = final_video.set_audio(audio)
-                
-            except Exception as e:
-                print(f"Warning: Could not add audio: {str(e)}")
-        
-        # Write final video
-        final_video.write_videofile(
-            "output.mp4",
-            fps=settings['video']['fps'],
-            codec=settings['video'].get('codec', 'libx264'),
-            preset=settings['video'].get('preset', 'medium')
-        )
-        
+            # Create video clips
+            clips = []
+            
+            # Add intro if present
+            if intro_clip:
+                print("Adding intro clip to video")
+                clips.append(intro_clip)
+            
+            # Add question clips
+            print("\nCreating question clips...")
+            for i, qa in enumerate(questions):
+                print(f"Creating clip for question {i+1}")
+                clip = create_qa_video(
+                    question=clean_text(qa['question']),
+                    answer=clean_text(qa['answer']),
+                    settings=settings,
+                    audio_clip=None
+                )
+                clips.append(clip)
+            
+            # Add end clip if present
+            if end_clip:
+                print("Adding end clip to video")
+                clips.append(end_clip)
+            
+            print(f"Final video will have {len(clips)} clips")
+            
+            # Concatenate video clips
+            final_video = concatenate_videoclips(clips, method="compose")
+            
+            # Add audio if specified
+            if 'audio' in settings and settings['audio'].get('file'):
+                try:
+                    # Load audio file
+                    audio = AudioFileClip(settings['audio']['file'])
+                    
+                    # Loop audio if needed
+                    if settings['audio'].get('loop', False):
+                        total_duration = final_video.duration
+                        num_loops = int(np.ceil(total_duration / audio.duration))
+                        audio_clips = [audio] * num_loops
+                        audio = concatenate_audioclips(audio_clips).subclip(0, total_duration)
+                    
+                    # Set volume if specified
+                    if 'volume' in settings['audio']:
+                        audio = audio.volumex(settings['audio']['volume'])
+                    
+                    # Combine audio with video
+                    final_video = final_video.set_audio(audio)
+                    
+                except Exception as e:
+                    print(f"Warning: Could not add audio: {str(e)}")
+            
+            # Write final video
+            final_video.write_videofile(
+                "output.mp4",
+                fps=settings['video']['fps'],
+                codec=settings['video'].get('codec', 'libx264'),
+                preset=settings['video'].get('preset', 'medium')
+            )
+            
     except Exception as e:
         print(f"Error in main: {str(e)}")
         raise

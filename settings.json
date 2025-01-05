@@ -1,7 +1,21 @@
 {
-  "project": "projects/template/project_settings.json",
-  "project_intro": "projects/template/project_intro.json",
-  "project_end": "projects/template/project_end.json",
+  "standard": {
+    "enabled": false,
+    "project": "projects/template/project_settings.json",
+    "project_intro": "projects/template/project_intro.json",
+    "project_end": "projects/template/project_end.json"
+  },
+  "tiktok": {
+    "enabled": true,
+    "project": "projects/template/tiktok/project_settings.json",
+    "project_intro": "",
+    "project_end": "projects/template/tiktok/project_end.json",
+    "output": {
+      "questions_per_video":25,
+      "number_of_videos": 3,
+      "filename_prefix": "tiktok_part"
+    }
+  },
   "font_directories": [
     "/Library/Fonts/",
     "/System/Library/Fonts/",

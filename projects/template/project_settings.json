@@ -2,13 +2,14 @@
     "questions_file": "questions.json",
     "background": {
       "color": "#060CE9",
-      "opacity": 1.0
+      "opacity": 1.0,
+      "image": "backgrounds/OneDirection-Background-9-16.png"
     },
     "text": {
       "font": "Phosphate-Solid",
       "size": {
-        "question": 70,
-        "answer": 90,
+        "question": 90,
+        "answer": 80,
         "timer": 80
       },
       "color": "#FFFFFF",
@@ -48,16 +49,55 @@
         }
       },
       "alignment": "center",
-      "wrap_width": 30
+      "wrap_width": 30,
+      "overlays": [
+        {
+          "enabled": false,
+          "content": "Subscribe!",
+          "font": "Phosphate-Solid",
+          "size": 50,
+          "color": "#FFFFFF",
+          "position": {
+            "x": "right",
+            "y": "bottom",
+            "padding": 30
+          },
+          "dimensions": {
+            "width": 400,
+            "height": null
+          },
+          "timing": {
+            "start": 0,
+            "duration": "full",
+            "fade": {
+              "enabled": true,
+              "duration": 0.5
+            }
+          },
+          "shadow": {
+            "enabled": true,
+            "color": "#000000",
+            "offset": {
+              "x": 5,
+              "y": 5
+            }
+          },
+          "outline": {
+            "enabled": true,
+            "color": "#000000",
+            "thickness": 2
+          }
+        }
+      ]
     },
     "timer": {
-      "shape": "square",
+      "shape": "circle",
       "circle": {
         "size": 150,
         "color": "#FFFFFF",
         "position": {
           "x": "right",
-          "y": 10, 
+          "y": 50, 
           "padding": 50 
         }
       },
@@ -75,18 +115,18 @@
       },
       "sound": {
         "enabled": false,
-        "file": "/sounds/tick.mp3",
+        "file": "sounds/tick.mp3",
         "volume": 3.0
       }
     },
     "preview_mode": {
-      "enabled": false,
+      "enabled": true,
       "type": "questions",
       "questions_limit": 1,
       "duration_limit": 33
     },
     "audio": {
-      "file": "/music/gameshow-brazz-loop-3min.mp3",
+      "file": "music/gameshow-brazz-loop-3min.mp3",
       "volume": 1.0,
       "loop": true
     },
@@ -105,6 +145,5 @@
       "fps": 24,
       "codec": "libx264",
       "preset": "ultrafast"
-    },
-    "background_image": "/backgrounds/background-1D.png"
+    }
   } 

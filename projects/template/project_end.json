@@ -1,10 +1,10 @@
 {
     "enabled": true,
-    "duration": 10,
+    "duration": 3,
     "background": {
       "color": "#060CE9",
       "opacity": 1.0,
-      "image": "/backgrounds/background-triviashowdown.png"
+      "image": "backgrounds/background-triviashowdown.png"
     },
     "images": [
       {
@@ -17,7 +17,7 @@
         "width": 300,
         "timing": {
           "start": 1,
-          "duration": 9,
+          "duration": 2,
           "fade": {
             "enabled": true,
             "duration": 0.5
@@ -42,7 +42,7 @@
         },
         "timing": {
           "start": 0,
-          "duration": 10,
+          "duration": 3,
           "fade": {
             "enabled": true,
             "duration": 0.5

@@ -1,0 +1,66 @@
+{
+  "enabled": true,
+  "duration": 3,
+  "background": {
+    "color": "#060CE9",
+    "opacity": 1.0,
+    "image": "backgrounds/OneDirection-Background-9-16.png"
+  },
+  "images": [
+    {
+      "file": "images/tiktok-logo.png",
+      "position": {
+        "x": "right",
+        "y": "top",
+        "padding": 20
+      },
+      "width": 150,
+      "timing": {
+        "start": 0,
+        "duration": 3,
+        "fade": {
+          "enabled": true,
+          "duration": 0.3
+        }
+      }
+    }
+  ],
+  "texts": [
+    {
+      "content": "Part {part_number}",
+      "font": "Phosphate-Solid",
+      "size": 80,
+      "color": "#FFFFFF",
+      "position": {
+        "x": "center",
+        "y": 200,
+        "padding": 20
+      },
+      "dimensions": {
+        "width": 600,
+        "height": null
+      },
+      "timing": {
+        "start": 0,
+        "duration": 3,
+        "fade": {
+          "enabled": true,
+          "duration": 0.3
+        }
+      },
+      "shadow": {
+        "enabled": true,
+        "color": "#000000",
+        "offset": {
+          "x": 5,
+          "y": 5
+        }
+      },
+      "outline": {
+        "enabled": true,
+        "color": "#000000",
+        "thickness": 2
+      }
+    }
+  ]
+} 
